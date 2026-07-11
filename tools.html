@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nuts — Tools · Liang Jung</title>
+<meta name="description" content="wasp-mcp, Almond, Chestnut, Betelnut — AI tools for computational design by Liang Jung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="tools">
+
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<nav class="nav poly">
+  <a class="nav-logo" href="index.html">LJ<span class="blink">_</span></a>
+  <div class="nav-links">
+    <a href="tools.html" data-n="01" class="active">tools</a>
+    <a href="studio1.html" data-n="02">studio</a>
+    <a href="art.html" data-n="03">art</a>
+    <a href="museum.html" data-n="04">museum</a>
+    <a href="index.html#contact" data-n="05">contact</a>
+  </div>
+  <div class="nav-meta mono">4 TOOLS · 1 FAMILY TREE</div>
+</nav>
+
+<header class="page-hero">
+  <p class="hero-kicker mono reveal">R.01 · AI × COMPUTATIONAL DESIGN TOOLING</p>
+  <h1 class="page-title reveal d1">THE NUTS<span class="accent">.</span></h1>
+  <p class="page-sub mono reveal d2">wasp-mcp · almond · chestnut · betelnut — a family of tools that let language models draw, aggregate, simulate and inhabit</p>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track mono">
+    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
+    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
+  </div>
+</div>
+
+<main class="works">
+
+  <!-- 01 · WASP-MCP -->
+  <article class="project reveal" id="p-wasp">
+    <div class="p-head">
+      <span class="p-num mono">T.01</span>
+      <h3>WASP-MCP</h3>
+      <div class="p-tags mono"><span>OPEN SOURCE · V0 SHIPPED</span><span>GRASSHOPPER × CLAUDE</span><span>FOOD4RHINO</span></div>
+    </div>
+    <div class="p-body">
+      <div class="p-hero sim-stage poly-frame">
+        <canvas id="sim-wasp"></canvas>
+        <div class="sim-hud mono"><span id="sim-wasp-phase">// SIMULATION · TEXT PROMPT → LIVE CANVAS</span></div>
+      </div>
+      <div class="steps" data-steps>
+        <div class="step poly"><span class="mono st-num">01 · SPEAK</span><p>You describe the definition in plain language. Claude resolves it against <b>evidence-backed component knowledge</b> — every node it knows, it knows from documentation, not guesswork.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · PLACE</span><p>Components land on the <b>live Grasshopper canvas</b>, wired and auto-organised into legible clusters — with <b>explained notes</b> beside each group, so the definition teaches you as it builds itself.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · RUN</span><p><b>Wasp discrete aggregation</b> executes on the canvas — parts, rules, stochastic growth — geometry the model composed but Grasshopper computes. Nothing is faked in a chat window.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · SEE</span><p><b>Viewport capture feeds back to the model</b> — it looks at what it made, critiques it, and iterates. The loop that makes it a collaborator, not a code generator.</p></div>
+      </div>
+      <div class="p-text poly">
+        <p>Why it's different: MCPs for CAD usually generate scripts blind. wasp-mcp works <em>on the canvas itself</em> — the model places real components, runs real solvers, and sees real output. Published on Food4Rhino and the Rhino Package Manager; installable with one PowerShell command.</p>
+        <p class="mono small">PYTHON FASTMCP ⇄ TCP 8090 ⇄ .GHA BRIDGE ⇄ GH_DOCUMENT API</p>
+        <div class="p-links mono">
+          <a href="https://github.com/liangjunglj-cpu/wasp-mcp" target="_blank" rel="noopener">GITHUB ↗</a>
+          <a href="https://www.food4rhino.com/en/app/wasp" target="_blank" rel="noopener">WASP · FOOD4RHINO ↗</a>
+        </div>
+      </div>
+      <div class="p-gallery three-wide">
+        <figure class="poly-frame span2"><video src="assets/video/wasp_demo.mp4" controls muted loop playsinline preload="metadata"></video><figcaption class="mono">DEMO · WASP-MCP IN SESSION</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/wasp_canvas.png" alt="Claude driving a live Wasp aggregation on the Grasshopper canvas" loading="lazy"><figcaption class="mono">THE REAL CANVAS · STOCHASTIC AGGREGATION</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 · ALMOND -->
+  <article class="project reveal" id="p-almond">
+    <div class="p-head">
+      <span class="p-num mono">T.02</span>
+      <h3>ALMOND</h3>
+      <div class="p-tags mono"><span>V1.1</span><span>CLAUDE → RHINO MCP</span><span>PHYSICS LOOP</span></div>
+    </div>
+    <div class="p-body">
+      <div class="p-hero sim-stage poly-frame">
+        <canvas id="sim-almond"></canvas>
+        <div class="sim-hud mono"><span id="sim-almond-phase">// SIMULATION · GENERATE → SIMULATE → CRITIQUE → REGENERATE</span></div>
+      </div>
+      <div class="steps" data-steps>
+        <div class="step poly"><span class="mono st-num">01 · GENERATE</span><p>Claude proposes structure in Rhino — not from primitives, but from a <b>repository of real structural elements</b> and, since v1.1, <b>IKEA's actual furniture catalogue</b>, pulled by what you specify.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · SIMULATE</span><p>The proposal is submitted to <b>Kangaroo form-finding and Karamba structural checks</b>. Gravity is not optional. Members that overstress are named, not hidden.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · CRITIQUE</span><p>The model <b>reads the physics results and argues with them</b> — a reasoning pass over deflections and utilisation before it touches the geometry again.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · REGENERATE</span><p>A corrected proposal replaces the first. The loop repeats until the structure is something that is <b>actually possible</b> — AI that can defend what it draws.</p></div>
+      </div>
+      <div class="p-text poly">
+        <p>Why it's different: generative AI is happy to draw the impossible. Almond closes the loop with physics — every form it proposes has survived simulation and its own critique. Developed alongside a live drawing workflow, feeding 2D vectors and a voxel adaptive pavilion study.</p>
+        <p class="mono small">RHINO / GH ⇄ KANGAROO · KARAMBA ⇄ REASONING PASS · REPEAT</p>
+      </div>
+      <div class="p-gallery three-wide">
+        <figure class="poly-frame span2"><video src="assets/video/doc_tg2.mp4" controls muted loop playsinline preload="metadata"></video><figcaption class="mono">FULL DEMO · ALMOND IN SESSION</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/art/art_almond_ikea.jpg" alt="Almond 1.1 — furniture pulled from IKEA's catalogue" loading="lazy"><figcaption class="mono">ALMOND 1.1 · IKEA CATALOGUE, NOT PRIMITIVES</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/art/art_almond_drawing.jpg" alt="Developing Almond alongside a drawing workflow" loading="lazy"><figcaption class="mono">ALMOND × DRAWING WORKFLOW</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/art/art_almond_vectors.jpg" alt="Feeding 2D vector files to Almond" loading="lazy"><figcaption class="mono">2D VECTORS → GEOMETRY</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 · CHESTNUT with live splat -->
+  <article class="project reveal" id="p-chestnut">
+    <div class="p-head">
+      <span class="p-num mono">T.03</span>
+      <h3>CHESTNUT</h3>
+      <div class="p-tags mono"><span>SHARP-UROP</span><span>AI → VR</span><span>GAUSSIAN SPLATS</span></div>
+    </div>
+    <div class="p-body">
+      <div class="splat-section" id="splat-section">
+        <div class="splat-sticky">
+          <div class="p-hero chestnut-stage poly-frame">
+            <div id="splat-stage"></div>
+            <canvas id="chestnut-canvas" aria-hidden="true"></canvas>
+            <div class="splat-hud mono" aria-hidden="true">
+              <span id="splat-status">LOADING SPLAT · world_basalt.spz · 5.6 MB</span>
+              <span id="splat-angle">θ 000°</span>
+            </div>
+            <div class="chestnut-prompts mono" id="chestnut-prompts">
+              <span class="cp-label">// THIS IS NOT A SIMULATION — A REAL GENERATED WORLD · SCROLL TO ORBIT</span>
+              <span class="cp-line" id="cp-line">iceland basalt formation with ice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="steps" data-steps>
+        <div class="step poly"><span class="mono st-num">01 · PROMPT → WORLD</span><p>A sentence goes to <b>World Labs Marble</b>; an explorable Gaussian-splat world comes back — half a million gaussians per world, cached locally as SPZ.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · COLLIDE</span><p>Each world gets a <b>collider mesh</b>, GLB props and physics, so the space isn't a picture — it has floors you stand on and walls that stop you.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · INHABIT</span><p>Walk it on desktop or in <b>WebXR on Quest 3</b>, alone or in shared Socket.IO sessions. Paired with Almond, the workflow closes: reason the geometry, then walk inside it.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · EVALUATE</span><p>A built-in <b>rubric captures spatial coherence, legibility, atmosphere and tectonic failure</b> per world — the platform is both the instrument and the output of the UROP.</p></div>
+      </div>
+      <div class="p-text poly">
+        <p>Why it's different: AI-to-VR demos show you a scene; Chestnut is a <em>research instrument</em> that logs how AI worlds fail — hallucinated geometry, scale inconsistency, tectonic nonsense — building the failure taxonomy for AI as an architectural medium.</p>
+        <p class="mono small">MARBLE API → SPZ → COLLIDER → WEBXR · rubric per world · UROP w/ PROF POON KING WANG</p>
+      </div>
+      <div class="p-gallery three-wide">
+        <figure class="poly-frame span2"><video src="assets/video/doc_tg1.mp4" controls muted loop playsinline preload="metadata"></video><figcaption class="mono">FULL FILM · ALMOND × CHESTNUT · THE COMBINED WORKFLOW</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/art/art_almond_chestnut.jpg" alt="Almond and Chestnut combined workflow" loading="lazy"><figcaption class="mono">ALMOND × CHESTNUT · ONE WORKFLOW</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/chestnut_app.jpg" alt="The Chestnut app — collider debug wireframe over a generated splat world" loading="lazy"><figcaption class="mono">THE APP · COLLIDER DEBUG OVER A LIVE WORLD</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/art/art_fable_rules.jpg" alt="Rule-based architecture experiments with Fable" loading="lazy"><figcaption class="mono">RULE-BASED EXPERIMENTS · FABLE</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 · BETELNUT -->
+  <article class="project reveal" id="p-betelnut">
+    <div class="p-head">
+      <span class="p-num mono">T.04</span>
+      <h3>BETELNUT</h3>
+      <div class="p-tags mono"><span>MAP-FIRST</span><span>GEOSPATIAL</span><span>LIVE MVP</span></div>
+    </div>
+    <div class="p-body">
+      <div class="p-hero sim-stage poly-frame">
+        <canvas id="sim-betelnut"></canvas>
+        <div class="sim-hud mono"><span id="sim-betelnut-phase">// SIMULATION · GEOJSON → SEMANTIC SYNTHESIS</span></div>
+      </div>
+      <div class="steps" data-steps>
+        <div class="step poly"><span class="mono st-num">01 · LOAD</span><p>Drop in <b>GeoJSON</b> — parcels, roads, coastlines. The map is the interface; there is no ribbon of five hundred GIS buttons.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · ASK</span><p>A <b>semantic layer</b> reads the data's meaning, so you ask in design terms — "what falls within 200 m of the shoreline?" — not in SQL.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · SYNTHESIZE</span><p><b>QGIS-like operations in the browser</b> — buffers, overlays, spatial joins — plus <b>traffic analysis on custom input models</b>, currently in development.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · DECIDE</span><p>Results render as planning evidence — built for <b>architects and planners</b>, not GIS specialists, with environmental simulation on the roadmap.</p></div>
+      </div>
+      <div class="p-text poly">
+        <p>Why it's different: geospatial analysis normally lives in expert desktop software. Betelnut moves the essential synthesis into a map-first browser app where the semantic layer does the GIS translation for you.</p>
+        <p class="mono small">GEOJSON → SEMANTIC LAYER → BUFFER / OVERLAY / JOIN → EVIDENCE</p>
+        <div class="p-links mono">
+          <a href="https://betelnut-mvp.vercel.app/" target="_blank" rel="noopener">OPEN THE MVP ↗</a>
+        </div>
+      </div>
+      <div class="p-gallery three-wide">
+        <figure class="tilt poly-frame span2"><img src="assets/art/art_betelnut.jpg" alt="Betelnut — semantic layer processing geojson for QGIS-like synthesis" loading="lazy"><figcaption class="mono">SEMANTIC GEOJSON LAYER · IN DEVELOPMENT</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <div class="page-next reveal">
+    <a href="studio1.html" class="mono">NEXT ROOM → CORE STUDIO 01</a>
+  </div>
+</main>
+
+<footer class="contact">
+  <p class="colophon mono">© 2026 CHEN LIANG JUNG · <a href="index.html">BACK TO INDEX</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <img src="" alt="">
+  <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
+<script defer src="gaussian-splats-3d.js"></script>
+<script defer src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIANG JUNG — Architecture × AI × Art</title>
+<meta name="description" content="Portfolio of Chen Liang Jung — SUTD architecture student working across computational design, AI tooling and art.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<nav class="nav poly">
+  <a class="nav-logo" href="index.html">LJ<span class="blink">_</span></a>
+  <div class="nav-links">
+    <a href="tools.html" data-n="01">tools</a>
+    <a href="studio1.html" data-n="02">studio</a>
+    <a href="art.html" data-n="03">art</a>
+    <a href="museum.html" data-n="04">museum</a>
+    <a href="#contact" data-n="05">contact</a>
+  </div>
+  <div class="nav-meta mono">SGP · 1.3521°N 103.8198°E</div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────── -->
+<header class="hero" id="top">
+  <canvas id="splats" aria-hidden="true"></canvas>
+  <div id="hero3d" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="hero-kicker mono reveal">C.L.J — PORTFOLIO / V.2026.07</p>
+    <h1 class="hero-title">
+      <span class="line reveal">LIANG</span>
+      <span class="line reveal d1">JUNG<span class="accent">.</span></span>
+    </h1>
+    <div class="hero-sub poly reveal d2">
+      <p class="mono">architecture student @ <b>SUTD</b> · b.arch '28<br>
+      building tools where <span class="accent">AI</span>, <span class="accent">computation</span> &amp; <span class="accent">architecture</span> collide.</p>
+    </div>
+    <div class="hero-tags mono reveal d3">
+      <span>RHINO / GH</span><span>MCP TOOLING</span><span>GAUSSIAN SPLATS</span><span>WEBXR</span><span>GEOSPATIAL</span><span>UNREAL</span>
+    </div>
+  </div>
+
+  <div class="hero-foot mono">
+    <span>SCROLL FOR THE INDEX</span>
+    <span id="hero3d-status">MESH · LOADING</span>
+    <span class="arrow">↓</span>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track mono">
+    <span>ARCHITECTURE ✕ AI ✕ ART — DISCRETE AGGREGATION — MEMORY AS MATERIAL — SPLATS TO SPACE — MAP-FIRST — </span>
+    <span>ARCHITECTURE ✕ AI ✕ ART — DISCRETE AGGREGATION — MEMORY AS MATERIAL — SPLATS TO SPACE — MAP-FIRST — </span>
+  </div>
+</div>
+
+<!-- ── STATEMENT ───────────────────────────────────── -->
+<section class="statement">
+  <blockquote class="reveal">
+    <p>"The machine does not know what it made. <span class="accent">You are responsible for knowing.</span>"</p>
+  </blockquote>
+  <blockquote class="reveal d1">
+    <p>"Authorship shifts — from making the object to <span class="accent">designing the conditions</span> under which it can appear."</p>
+  </blockquote>
+  <p class="statement-body mono reveal d2">Tools that submit their geometry to physics. An archive that rebuilds itself to match what people remember. A pen that makes the generated image answer for itself. Creation, held to consequence.</p>
+</section>
+
+<!-- ── WORKS INDEX ─────────────────────────────────── -->
+<main id="works" class="works">
+  <div class="section-head reveal">
+    <h2><span class="mono idx">01</span> INDEX</h2>
+    <p class="mono">three rooms · 2025 — 2026</p>
+  </div>
+
+  <div class="index-grid">
+    <a class="index-card poly-frame tilt reveal" href="tools.html">
+      <img src="assets/wasp_canvas.png" alt="wasp-mcp driving a live Grasshopper canvas" loading="lazy">
+      <div class="ic-label">
+        <span class="mono ic-num">R.01 · MAIN ATTRACTION</span>
+        <h3>THE NUTS — TOOLS</h3>
+        <p class="mono">wasp-mcp · almond · chestnut · betelnut</p>
+      </div>
+    </a>
+    <a class="index-card poly-frame tilt reveal d1" href="studio1.html">
+      <img src="assets/cs1/ex4_sectionaxon.jpg" alt="Inverted pyramid section-axonometric, MoMA Singapore" loading="lazy">
+      <div class="ic-label">
+        <span class="mono ic-num">R.02</span>
+        <h3>CORE STUDIO 01</h3>
+        <p class="mono">four exercises · moma singapore · the inverted pyramid</p>
+      </div>
+    </a>
+    <a class="index-card poly-frame tilt reveal d2" href="art.html">
+      <img src="assets/framer/framer_16.png" alt="Watercolor sketch of the ArtScience Museum" loading="lazy">
+      <div class="ic-label">
+        <span class="mono ic-num">R.03</span>
+        <h3>ART &amp; FIELD NOTES</h3>
+        <p class="mono">@ljungart · studies · sketches · process film</p>
+      </div>
+    </a>
+    <a class="index-card poly-frame tilt reveal" href="dream-engine.html">
+      <img src="assets/dream/tracing_overlays.jpg" alt="Ink sketches overlaid on printed AI generations" loading="lazy">
+      <div class="ic-label">
+        <span class="mono ic-num">R.04 · WRITING</span>
+        <h3>THE DREAM ENGINE</h3>
+        <p class="mono">essay · on AI, taste, and why creation requires risk</p>
+      </div>
+    </a>
+    <a class="index-card poly-frame tilt reveal d1" href="museum.html">
+      <img src="assets/mom_hero_axo.png" alt="Museum of Memories translucent axonometric" loading="lazy">
+      <div class="ic-label">
+        <span class="mono ic-num">R.05</span>
+        <h3>MUSEUM OF MEMORIES</h3>
+        <p class="mono">core studio 02 · bering strait · splats → rooms</p>
+      </div>
+    </a>
+  </div>
+</main>
+
+<!-- ── PRACTICE ────────────────────────────────────── -->
+<section id="practice" class="practice">
+  <div class="section-head reveal">
+    <h2><span class="mono idx">02</span> PRACTICE</h2>
+    <p class="mono">roles · research · education</p>
+  </div>
+  <div class="practice-grid">
+    <div class="poly p-card reveal">
+      <span class="mono pc-when">2025 — NOW</span>
+      <h4>SUTD · Building 0</h4>
+      <p>Designing the interior working space of Building 0 and exploring how AI can empower architecture students &amp; practices — VR platforms, projection mapping, map-based planning tools.</p>
+    </div>
+    <div class="poly p-card reveal d1">
+      <span class="mono pc-when">2024 — NOW</span>
+      <h4>LKY Centre for Innovative Cities</h4>
+      <p>Student research assistant on urban heat — household surveys, systematic reviews and research illustration.</p>
+    </div>
+    <div class="poly p-card reveal d2">
+      <span class="mono pc-when">2024 — 2028</span>
+      <h4>SUTD · B.Arch</h4>
+      <p>Bachelor of Architecture. 3rd place, What The Hack 2024. Posting art &amp; architecture as <a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">@ljungart</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────── -->
+<footer id="contact" class="contact">
+  <div class="contact-inner poly reveal">
+    <h2 class="contact-title">LET'S BUILD<br>SOMETHING <span class="accent">ODD</span>.</h2>
+    <div class="contact-links mono">
+      <a href="mailto:liangjung.lj@gmail.com">liangjung.lj@gmail.com ↗</a>
+      <a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">instagram / @ljungart ↗</a>
+      <a href="https://www.linkedin.com/in/liangjung-218074295" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="https://betelnut-mvp.vercel.app/" target="_blank" rel="noopener">betelnut app ↗</a>
+    </div>
+  </div>
+  <p class="colophon mono">© 2026 CHEN LIANG JUNG · SET IN SPACE GROTESK + IBM PLEX MONO · BUILT WITH CLAUDE</p>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <img src="" alt="">
+  <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
+<script defer src="script.js"></script>
+</body>
+</html>

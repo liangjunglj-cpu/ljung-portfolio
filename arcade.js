@@ -269,6 +269,116 @@
     setTimeout(() => hint.classList.remove('on'), 8000);
   }
 
+  /* ———————————————————————————————— the sixth room · passport gate
+     the room prints itself only for a complete passport: seventeen
+     stamps orbit as a constellation, and the receipt reprints your
+     whole route in the order you earned it */
+  if (page === 'sixth') {
+    (function gate(n) {
+      const pp = window.__passport;
+      if (!pp) { if (n > 0) setTimeout(() => gate(n - 1), 200); return; }
+      const locked = document.getElementById('six-locked');
+      const room = document.getElementById('six-room');
+      if (!pp.isComplete()) {
+        const c = pp.counts();
+        const cEl = document.getElementById('six-locked-counts');
+        if (cEl) cEl.textContent =
+          'it prints itself when the passport is full · you hold ' +
+          c.r + '/6 rooms · ' + c.s + '/6 stations · ' + c.k + '/5 secrets';
+        return;
+      }
+      locked.hidden = true;
+      room.hidden = false;
+
+      /* gather the seventeen stamps */
+      const st = pp.state;
+      const stamps = [];
+      pp.lists.ROOMS.forEach((x, i) => stamps.push({ label: 'ROOM · ' + x.label, ts: st.rooms[x.id], ring: 0, i, n: 6, color: '#e8e4dc' }));
+      pp.lists.STATIONS.forEach((x, i) => stamps.push({ label: x.id + ' · ' + x.label, ts: st.stations[x.id], ring: 1, i, n: 6, color: '#7fd4ff' }));
+      pp.lists.SECRETS.forEach((x, i) => stamps.push({ label: 'SECRET · ' + x.label, ts: st.secrets[x.id], ring: 2, i, n: 5, color: '#FF7A2F' }));
+      const fmt = ts => {
+        const d = new Date(ts);
+        const p = v => String(v).padStart(2, '0');
+        return p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+      };
+
+      /* the constellation */
+      const cv = document.getElementById('six-canvas');
+      const info = document.getElementById('six-info');
+      if (cv) {
+        const ctx = cv.getContext('2d');
+        let W = 0, H = 0, mx = -1e4, my = -1e4;
+        const resize = () => { W = cv.width = cv.offsetWidth * devicePixelRatio; H = cv.height = cv.offsetHeight * devicePixelRatio; };
+        resize(); addEventListener('resize', resize); addEventListener('load', resize);
+        cv.addEventListener('mousemove', e => {
+          const r = cv.getBoundingClientRect();
+          mx = (e.clientX - r.left) * devicePixelRatio;
+          my = (e.clientY - r.top) * devicePixelRatio;
+        });
+        cv.addEventListener('mouseleave', () => { mx = my = -1e4; });
+        (function draw(now) {
+          requestAnimationFrame(draw);
+          if (!W) return;
+          ctx.clearRect(0, 0, W, H);
+          const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.5;
+          const rings = [R * 0.34, R * 0.58, R * 0.82];
+          ctx.strokeStyle = 'rgba(232,228,220,.1)';
+          ctx.lineWidth = devicePixelRatio;
+          rings.forEach(r => { ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.stroke(); });
+          let hot = null, hd = 30 * devicePixelRatio;
+          const pts = stamps.map(s => {
+            const a = (s.i / s.n) * Math.PI * 2 + now / (14000 - s.ring * 3000);
+            const x = cx + Math.cos(a) * rings[s.ring];
+            const y = cy + Math.sin(a) * rings[s.ring] * 0.86;
+            const d = Math.hypot(mx - x, my - y);
+            if (d < hd) { hd = d; hot = s; }
+            return { s, x, y };
+          });
+          for (const p of pts) {
+            const isHot = p.s === hot;
+            ctx.shadowColor = p.s.color;
+            ctx.shadowBlur = (isHot ? 26 : 14) * devicePixelRatio;
+            ctx.fillStyle = p.s.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, (isHot ? 6 : 3.6) * devicePixelRatio, 0, 7);
+            ctx.fill();
+          }
+          ctx.shadowBlur = 0;
+          // the visitor, at the center
+          ctx.fillStyle = '#FF4D00';
+          ctx.beginPath(); ctx.arc(cx, cy, 4.4 * devicePixelRatio, 0, 7); ctx.fill();
+          if (info) info.textContent = hot
+            ? '// ' + hot.label + ' · STAMPED ' + fmt(hot.ts)
+            : '// EVERY STAMP IN YOUR PASSPORT, ORBITING · ROOMS ARE PAPER · STATIONS ARE ICE · SECRETS ARE FIRE';
+        })(0);
+      }
+
+      /* the receipt */
+      const ordered = stamps.slice().sort((a, b) => a.ts - b.ts);
+      const pad = (s2, n2) => (s2 + ' ').padEnd(n2, '·');
+      const lines = [];
+      lines.push('LJ PASSPORT — REPRINTED ' + fmt(Date.now()));
+      lines.push('liangjunglj-cpu.github.io/ljung-portfolio');
+      lines.push('────────────────────────────────────────');
+      ordered.forEach(s2 => lines.push(pad(s2.label, 32) + ' ' + fmt(s2.ts)));
+      lines.push('────────────────────────────────────────');
+      lines.push('17/17 · EVERY ROOM · EVERY STATION · EVERY SECRET');
+      lines.push('FOR THE ONES WHO LOOKED — THANK YOU.');
+      const receipt = lines.join('\n');
+      const pre = document.getElementById('six-receipt');
+      if (pre) pre.textContent = receipt;
+      const dl = document.getElementById('six-download');
+      if (dl) dl.addEventListener('click', e => {
+        e.preventDefault();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([receipt], { type: 'text/plain' }));
+        a.download = 'lj-passport-receipt.txt';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      });
+    })(25);
+  }
+
   /* ———————————————————————————————— dream engine · reading meter
      % read + minutes left at 230 wpm; the paragraph you're on stays
      lit while the rest of the essay recedes */

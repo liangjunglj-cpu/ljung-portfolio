@@ -97,8 +97,22 @@
       `<ul>${STATIONS.map(x => row(!!state.stations[x.id], x.id, x.label)).join('')}</ul>` +
       `<p class="pp-head">SECRETS · ${k}/${SECRETS.length}</p>` +
       `<ul>${SECRETS.map(secretRow).join('')}</ul>` +
-      (done ? '<p class="pp-done">EVERY ROOM · EVERY STATION · EVERY SECRET</p>' : '');
+      (done
+        ? '<p class="pp-done">EVERY ROOM · EVERY STATION · EVERY SECRET</p>' +
+          '<a class="pp-six" href="sixth.html">ENTER THE SIXTH ROOM →</a>'
+        : '');
   }
+
+  /* read-only API for the sixth room's gate */
+  window.__passport = {
+    get state() { return state; },
+    lists: { ROOMS, STATIONS, SECRETS },
+    counts,
+    isComplete() {
+      const c = counts();
+      return c.r === ROOMS.length && c.s === STATIONS.length && c.k === SECRETS.length;
+    }
+  };
 
   chip.addEventListener('click', e => {
     e.stopPropagation();

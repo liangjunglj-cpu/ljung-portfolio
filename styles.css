@@ -604,3 +604,23 @@ body.walking .descent-tint{display:none}
 .pp-hint{opacity:.62;font-size:.92em;font-style:italic}
 .pp-pop{animation:pp-pop .8s cubic-bezier(.2,.8,.2,1)}
 @keyframes pp-pop{35%{transform:scale(1.14);color:#FF4D00}}
+
+/* -- the sixth room -- */
+.six-locked{
+  min-height:82svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;text-align:center;padding:140px 6vw 60px;position:relative;z-index:2
+}
+.sl-mark{font-size:clamp(4rem,12vw,8rem);color:rgba(22,20,16,.14);line-height:1}
+.sl-title{font-size:.9rem;letter-spacing:.3em}
+.sl-body{font-size:.66rem;letter-spacing:.16em;color:var(--ink-soft);max-width:520px;line-height:2}
+.sl-back a{font-size:.62rem;letter-spacing:.2em;color:var(--orange)}
+.six-stage{position:relative;aspect-ratio:16/9;min-height:320px;background:#0d0d0f;border-radius:8px;overflow:hidden}
+.six-stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.six-receipt-wrap{grid-column:1;padding:26px;overflow-x:auto}
+.six-receipt-wrap pre{font-size:.68rem;line-height:2;letter-spacing:.04em;white-space:pre}
+.pp-six{
+  display:block;margin-top:10px;padding:11px 14px;border-radius:8px;text-align:center;
+  background:var(--orange);color:#fff !important;text-decoration:none;
+  font-size:.6rem;letter-spacing:.22em;transition:background .2s
+}
+.pp-six:hover{background:var(--ink)}

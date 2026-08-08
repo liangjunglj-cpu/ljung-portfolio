@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sixth Room — Liang Jung</title>
+<meta name="description" content="An unlisted room. It does not exist until you have seen everything else.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body data-page="sixth">
+
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<nav class="nav poly">
+  <a class="nav-logo" href="index.html">LJ<span class="blink">_</span></a>
+  <div class="nav-links">
+    <a href="tools.html" data-n="01">tools</a>
+    <a href="studio1.html" data-n="02">studio</a>
+    <a href="art.html" data-n="03">art</a>
+    <a href="museum.html" data-n="04">museum</a>
+    <a href="index.html#contact" data-n="05">contact</a>
+  </div>
+  <div class="nav-meta mono">R.∅ · UNLISTED</div>
+</nav>
+
+<!-- locked state: shown until the passport is complete -->
+<section class="six-locked mono" id="six-locked">
+  <p class="sl-mark">∅</p>
+  <p class="sl-title">THIS ROOM DOES NOT EXIST YET.</p>
+  <p class="sl-body" id="six-locked-counts">it prints itself when the passport is full — every room, every station, every secret.</p>
+  <p class="sl-back"><a href="index.html">BACK TO THE ROOMS THAT DO ↗</a></p>
+</section>
+
+<!-- the room: revealed by arcade.js when the passport is complete -->
+<div id="six-room" hidden>
+
+  <header class="page-hero">
+    <p class="hero-kicker mono reveal">R.∅ · FOR THE ONES WHO LOOKED</p>
+    <h1 class="page-title reveal d1">THE SIXTH<br>ROOM<span class="accent">.</span></h1>
+    <p class="page-sub mono reveal d2">you looked everywhere — every room, every station, every secret. the archive noticed. it kept your route.</p>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track mono">
+      <span>EVERY ROOM · EVERY STATION · EVERY SECRET — THE ARCHIVE REMEMBERS YOU — YOUR VISIT, DEPOSITED AS A MEMORY — </span>
+      <span>EVERY ROOM · EVERY STATION · EVERY SECRET — THE ARCHIVE REMEMBERS YOU — YOUR VISIT, DEPOSITED AS A MEMORY — </span>
+    </div>
+  </div>
+
+  <main class="works">
+
+    <article class="project reveal">
+      <div class="p-head">
+        <span class="p-num mono">∅.01</span>
+        <h3>YOUR VISIT, AS A CONSTELLATION</h3>
+        <div class="p-tags mono"><span>17 STAMPS</span><span>HOVER TO READ</span></div>
+      </div>
+      <div class="walk-frame poly-frame">
+        <div class="six-stage" id="six-stage">
+          <canvas id="six-canvas"></canvas>
+          <div class="sim-hud mono"><span id="six-info">// EVERY STAMP IN YOUR PASSPORT, ORBITING · ROOMS ARE PAPER · STATIONS ARE ICE · SECRETS ARE FIRE</span></div>
+        </div>
+      </div>
+      <p class="text-rule mono reveal">In the Museum of Memories, visitors deposit what they remember and the building rebuilds itself around the crowding. This site does the same, quietly: your seventeen stamps are the reading. Where you lingered, this room glows.</p>
+    </article>
+
+    <article class="project reveal">
+      <div class="p-head">
+        <span class="p-num mono">∅.02</span>
+        <h3>THE RECEIPT</h3>
+        <div class="p-tags mono"><span>REPRINTED FOR YOU</span><span>TAKE IT WITH YOU</span></div>
+      </div>
+      <div class="p-body">
+        <div class="poly six-receipt-wrap">
+          <pre class="mono" id="six-receipt">printing…</pre>
+        </div>
+        <div class="p-text poly">
+          <p>Once every freeze season the museum reprints its bylaws and deposits the old printing into the archive as a memory of the museum itself. You finished the passport, so the site reprints <em>you</em>: every stamp, in the order you earned them.</p>
+          <p class="mono small">THE OLD PRINTING JOINS THE ARCHIVE · THE NEW ONE IS YOURS</p>
+          <div class="p-links mono">
+            <a href="#" id="six-download">DOWNLOAD THE RECEIPT ↓</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project reveal">
+      <div class="p-head">
+        <span class="p-num mono">∅.03</span>
+        <h3>COLOPHON</h3>
+        <div class="p-tags mono"><span>HOW THIS WAS BUILT</span></div>
+      </div>
+      <div class="text-grid two-col">
+        <div class="poly t-card reveal"><span class="mono tc-num">THE FABRIC</span><p>Static HTML on GitHub Pages — no framework, no build step. Space Grotesk and IBM Plex Mono on a polycarbonate panel system. Cross-document View Transitions morph the rooms into each other; every page carries its own arcade layer.</p></div>
+        <div class="poly t-card reveal d1"><span class="mono tc-num">THE GAMES</span><p>The walkable museum and the playable Ginkgo world are three.js first-person builds — pointer lock, stepped-floor collision, per-zone fog and light. The Ginkgo world's plan was solved by the real compiler; the browser only realizes it.</p></div>
+        <div class="poly t-card reveal"><span class="mono tc-num">THE PASSPORT</span><p>Rooms, stations and secrets live in your browser's localStorage and nowhere else. Nothing is tracked, nothing leaves your machine. Clear it and the sixth room politely ceases to exist.</p></div>
+        <div class="poly t-card reveal d1"><span class="mono tc-num">THE HANDS</span><p>Designed and directed by Chen Liang Jung; built in collaboration with Claude Code. The drawings, models, worlds and tools it documents are the real work — this site is just their playable index.</p></div>
+      </div>
+      <p class="text-rule mono reveal">LET'S BUILD SOMETHING ODD — you already helped. <a href="mailto:liangjung.lj@gmail.com">SAY HELLO ↗</a></p>
+    </article>
+
+    <div class="page-next reveal">
+      <a href="index.html" class="mono">BACK TO THE INDEX</a>
+    </div>
+  </main>
+</div>
+
+<footer class="contact">
+  <p class="colophon mono">© 2026 CHEN LIANG JUNG · <a href="index.html">BACK TO INDEX</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <img src="" alt="">
+  <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
+</div>
+
+<script defer src="script.js?v=2"></script>
+<script defer src="passport.js?v=3"></script>
+<script defer src="arcade.js?v=3"></script>
+</body>
+</html>

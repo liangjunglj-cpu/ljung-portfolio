@@ -424,9 +424,18 @@ body.is-hovering .cursor-ring{width:56px;height:56px;opacity:.9}
 
 /* —— walkable museum —— */
 .walk-frame{padding:10px;margin-bottom:26px}
-#walk-stage{position:relative;aspect-ratio:16/9;min-height:340px;background:#0d1a24;border-radius:8px;overflow:hidden;cursor:auto}
-#walk-stage.live{position:fixed;inset:0;z-index:3000;aspect-ratio:auto;border-radius:0}
-#walk-stage canvas{position:absolute;inset:0;width:100% !important;height:100% !important;display:block}
+#walk-stage,#gk-stage{position:relative;aspect-ratio:16/9;min-height:340px;background:#0d1a24;border-radius:8px;overflow:hidden;cursor:auto}
+#gk-stage{background:#141310}
+#walk-stage.live,#gk-stage.live{position:fixed;inset:0;z-index:3000;aspect-ratio:auto;border-radius:0;min-height:0}
+#walk-stage canvas,#gk-stage canvas{position:absolute;inset:0;width:100% !important;height:100% !important;display:block}
+.gk-play{grid-column:1 / -1;margin-top:4px}
+.gk-end{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;
+  pointer-events:auto;text-align:center;padding:34px 44px;max-width:min(560px,90vw)
+}
+.gk-end .ge-title{font-size:.66rem;letter-spacing:.3em;color:var(--ink-soft)}
+.gk-end .ge-id{font-size:1.5rem;letter-spacing:.06em;color:var(--orange);margin:10px 0 14px;font-weight:600}
+.gk-end .ge-body{font-size:.66rem;letter-spacing:.12em;line-height:1.9;color:var(--ink-soft);margin-bottom:20px}
 body.walking{overflow:hidden}
 body.walking .depth-hud{display:none}
 body.walking .nav,.walking .cursor,.walking .cursor-ring{display:none}

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body data-page="tools">
 
@@ -202,6 +202,31 @@
         <p>Why it's different: most "AI makes a game" demos vibe-code Blueprints and hope. Ginkgo is a <em>compiler</em> — design intent is validated before the editor moves, every actor is ownership-tagged and reconciled, and each world carries a seeded <b>style card</b> (terrain archetype, palette, daylight, atmosphere) so consecutive seeds are <em>measurably</em> distinct places. Newest wing: outdoor <b>world generation</b> — seeded terrain synthesis with layout-driven terraforming, proven live across three endorsed rounds in UE 5.8 — the worlds below.</p>
         <p class="mono small">INTENT → GAMEMANIFEST → SOLVER → UE 5.8 MCP → EVIDENCE · SEEDED STYLE CARDS · THE LEFT PANEL IS THE REAL SOLVER LOOP, RESEEDED LIVE</p>
       </div>
+      <div class="gk-play walk-frame poly-frame">
+        <div id="gk-stage">
+          <div class="walk-overlay" id="gk-overlay">
+            <p class="mono">SHOWCASE_ATRIUM · SOLVED BY THE REAL GINKGO COMPILER (SEED 0 · SPATIAL 0.8153) · THE ZONES, ROUTE, RULES AND ENDING BELOW WERE NOT HAND-MODELLED</p>
+            <button class="walk-start mono" id="gk-start">PLAY THE COMPILED WORLD</button>
+            <p class="mono wo-hint">WASD MOVE · MOUSE LOOK · SPACE JUMP · ESC SURFACES<br>FIND THE TOKEN IN THE ALCOVE · UNSEAL THE ARCHIVE</p>
+          </div>
+          <div class="walk-hud mono" id="gk-hud" hidden>
+            <span class="wh-station" id="gk-zone">SHOWCASE_ATRIUM</span>
+            <span class="wh-depth" id="gk-obj">TOKEN ○</span>
+            <span class="wh-temp" id="gk-obj2">DOOR SEALED</span>
+            <span class="wh-note" id="gk-note"></span>
+            <span class="wh-cross" aria-hidden="true"></span>
+            <button class="wh-exit" id="gk-exit">✕ SURFACE</button>
+            <button class="wh-go" id="gk-go" aria-label="Walk forward">●</button>
+            <button class="wh-jump" id="gk-jump" aria-label="Jump">▲</button>
+            <div class="gk-end poly mono" id="gk-end" hidden>
+              <p class="ge-title">ENDING REACHED</p>
+              <p class="ge-id">archive_unsealed</p>
+              <p class="ge-body" id="gk-end-body"></p>
+              <button class="walk-start mono" id="gk-again">WALK IT AGAIN</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="p-gallery three-wide">
         <figure class="tilt poly-frame"><img src="assets/ginkgo/world_highlands.jpg" alt="Ginkgo-generated seeded highlands world at dusk in Unreal Engine, zone markers standing on solved terrain pads" loading="lazy"><figcaption class="mono">WORLD LAB · SEEDED HIGHLANDS AT DUSK · MARKERS ON SOLVED PADS</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/ginkgo/world_caldera.jpg" alt="Ginkgo-generated caldera world at noon in Unreal Engine — same compiler, different seed" loading="lazy"><figcaption class="mono">WORLD LAB · SAME COMPILER, NEW SEED · CALDERA AT NOON</figcaption></figure>
@@ -261,5 +286,6 @@
 <script defer src="script.js?v=2"></script>
 <script defer src="passport.js?v=1"></script>
 <script defer src="arcade.js?v=1"></script>
+<script defer src="ginkgo-world.js?v=1"></script>
 </body>
 </html>

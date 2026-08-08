@@ -1,0 +1,134 @@
+﻿{
+    "game_id":  "showcase_atrium",
+    "compiled_by":  "ginkgo v0 compiler - seed 0 - 2026-08-09",
+    "score":  0.8153,
+    "metrics":  {
+                    "adjacency":  0.6415,
+                    "path_continuity":  0.718,
+                    "privacy_gradient":  1.0,
+                    "mechanics":  1.0
+                },
+    "bounds":  [
+                   140.0,
+                   60.0,
+                   183.25,
+                   69.18
+               ],
+    "zones":  [
+                  {
+                      "id":  "porch",
+                      "x":  140.0,
+                      "y":  60.0,
+                      "w":  5.85,
+                      "h":  4.1,
+                      "ht":  3.4,
+                      "privacy":  0.05,
+                      "openness":  0.9,
+                      "kind":  "entry"
+                  },
+                  {
+                      "id":  "vestibule",
+                      "x":  145.9,
+                      "y":  61.238,
+                      "w":  3.71,
+                      "h":  4.31,
+                      "ht":  2.4,
+                      "privacy":  0.2,
+                      "openness":  0.15,
+                      "kind":  "threshold"
+                  },
+                  {
+                      "id":  "atrium",
+                      "x":  150.535,
+                      "y":  60.0,
+                      "w":  13.08,
+                      "h":  9.18,
+                      "ht":  8.5,
+                      "privacy":  0.2,
+                      "openness":  0.9,
+                      "kind":  "hall"
+                  },
+                  {
+                      "id":  "gallery",
+                      "x":  164.215,
+                      "y":  60.0,
+                      "w":  9.8,
+                      "h":  8.16,
+                      "ht":  4.5,
+                      "privacy":  0.35,
+                      "openness":  0.6,
+                      "kind":  "gallery"
+                  },
+                  {
+                      "id":  "alcove",
+                      "x":  174.265,
+                      "y":  60.0,
+                      "w":  3.79,
+                      "h":  4.22,
+                      "ht":  2.6,
+                      "privacy":  0.85,
+                      "openness":  0.2,
+                      "kind":  "anchor"
+                  },
+                  {
+                      "id":  "archive",
+                      "x":  178.28,
+                      "y":  60.0,
+                      "w":  4.97,
+                      "h":  6.03,
+                      "ht":  3.2,
+                      "privacy":  0.95,
+                      "openness":  0.1,
+                      "kind":  "anchor"
+                  }
+              ],
+    "route":  [
+                  [
+                      142.925,
+                      62.05
+                  ],
+                  [
+                      147.755,
+                      63.393
+                  ],
+                  [
+                      157.075,
+                      64.59
+                  ],
+                  [
+                      169.115,
+                      64.08
+                  ],
+                  [
+                      176.16,
+                      62.11
+                  ],
+                  [
+                      180.76500000000001,
+                      63.015
+                  ]
+              ],
+    "procession":  [
+                       "porch",
+                       "vestibule",
+                       "atrium",
+                       "gallery",
+                       "alcove",
+                       "archive"
+                   ],
+    "rules":  [
+                  "grant_archive_token",
+                  "open_archive"
+              ],
+    "ending":  [
+                   "archive_unsealed"
+               ],
+    "reachable":  [
+                      "alcove",
+                      "archive",
+                      "atrium",
+                      "gallery",
+                      "porch",
+                      "vestibule"
+                  ]
+}

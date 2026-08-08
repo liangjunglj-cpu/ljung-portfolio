@@ -424,7 +424,7 @@ body.is-hovering .cursor-ring{width:56px;height:56px;opacity:.9}
 
 /* —— walkable museum —— */
 .walk-frame{padding:10px;margin-bottom:26px}
-#walk-stage{position:relative;aspect-ratio:16/9;background:#0d1a24;border-radius:8px;overflow:hidden;cursor:auto}
+#walk-stage{position:relative;aspect-ratio:16/9;min-height:340px;background:#0d1a24;border-radius:8px;overflow:hidden;cursor:auto}
 #walk-stage.live{position:fixed;inset:0;z-index:3000;aspect-ratio:auto;border-radius:0}
 #walk-stage canvas{position:absolute;inset:0;width:100% !important;height:100% !important;display:block}
 body.walking{overflow:hidden}
@@ -434,6 +434,7 @@ body.walking .nav,.walking .cursor,.walking .cursor-ring{display:none}
   position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:20px;text-align:center;padding:24px;background:linear-gradient(rgba(4,12,18,.45), rgba(4,12,18,.72))
 }
+.walk-overlay[hidden],.walk-hud[hidden]{display:none}
 .walk-overlay p{color:#cfe0ea;font-size:.66rem;letter-spacing:.2em;line-height:1.9;max-width:560px}
 .walk-overlay .wo-hint{color:#7a94a6;font-size:.58rem}
 .walk-start{

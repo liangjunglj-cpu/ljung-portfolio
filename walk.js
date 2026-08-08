@@ -356,14 +356,23 @@
   /* —— input —— */
   addEventListener('keydown', e => {
     if (!live) return;
+    if (e.code === 'Escape') { exit(); return; }
     keys[e.code] = true;
     if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
   });
   addEventListener('keyup', e => { keys[e.code] = false; });
+  let dragging = false;
+  stage.addEventListener('mousedown', e => {
+    if (live && document.pointerLockElement !== stage && e.target.tagName !== 'BUTTON') dragging = true;
+  });
+  addEventListener('mouseup', () => { dragging = false; });
   addEventListener('mousemove', e => {
-    if (!live || document.pointerLockElement !== stage) return;
-    yaw -= e.movementX * 0.0022;
-    pitch = Math.max(-1.35, Math.min(1.35, pitch - e.movementY * 0.0022));
+    if (!live) return;
+    const locked = document.pointerLockElement === stage;
+    if (!locked && !dragging) return;
+    const k = locked ? 0.0022 : 0.0035;
+    yaw -= e.movementX * k;
+    pitch = Math.max(-1.35, Math.min(1.35, pitch - e.movementY * k));
   });
   // touch look
   let lastTouch = null;
@@ -447,25 +456,37 @@
     renderer.setSize(w, h, false);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }
-  let savedScroll = 0;
+  let savedScroll = 0, stageHome = null;
   function enter(noLock) {
     if (!built) build();
     live = true;
     savedScroll = scrollY;
+    // reparent to <body>: ancestors with backdrop-filter/transform would
+    // otherwise become the containing block and cage the fixed stage
+    if (!stageHome) stageHome = { parent: stage.parentElement, next: stage.nextSibling };
+    document.body.appendChild(stage);
     stage.classList.add('live');
     document.body.classList.add('walking');
     overlay.hidden = true; hud.hidden = false;
-    // reset player
+    // reset player + input state
     pos.x = 0; pos.z = 28; groundY = 0.4; pos.y = 2.1; yaw = 0; pitch = 0;
+    for (const k in keys) keys[k] = false;
+    touchGo = false; dragging = false;
     size();
     lastT = performance.now();
     if (!raf) raf = requestAnimationFrame(frame);
-    if (!isTouch && !noLock && stage.requestPointerLock) stage.requestPointerLock();
+    if (!isTouch && !noLock && stage.requestPointerLock) {
+      try {
+        const r = stage.requestPointerLock();
+        if (r && r.catch) r.catch(() => {}); // no lock → drag-look fallback
+      } catch (e) { /* drag-look fallback */ }
+    }
   }
   function exit() {
     live = false;
     if (raf) { cancelAnimationFrame(raf); raf = 0; }
     stage.classList.remove('live');
+    if (stageHome) stageHome.parent.insertBefore(stage, stageHome.next);
     document.body.classList.remove('walking');
     overlay.hidden = false; hud.hidden = true;
     if (document.pointerLockElement === stage) document.exitPointerLock();

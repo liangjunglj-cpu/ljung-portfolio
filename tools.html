@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Nuts — Tools · Liang Jung</title>
-<meta name="description" content="wasp-mcp, Almond, Chestnut, Betelnut — AI tools for computational design by Liang Jung.">
+<meta name="description" content="wasp-mcp, Almond, Chestnut, Ginkgo, Betelnut — AI tools for computational design by Liang Jung.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -25,19 +25,19 @@
     <a href="museum.html" data-n="04">museum</a>
     <a href="index.html#contact" data-n="05">contact</a>
   </div>
-  <div class="nav-meta mono">5 TOOLS · 1 FAMILY TREE</div>
+  <div class="nav-meta mono">6 TOOLS · 1 FAMILY TREE</div>
 </nav>
 
 <header class="page-hero">
   <p class="hero-kicker mono reveal">R.01 · AI × COMPUTATIONAL DESIGN TOOLING</p>
   <h1 class="page-title reveal d1">THE NUTS<span class="accent">.</span></h1>
-  <p class="page-sub mono reveal d2">wasp-mcp · almond · chestnut · unreal-mcp · betelnut — a family of tools that let language models draw, aggregate, simulate, film and inhabit</p>
+  <p class="page-sub mono reveal d2">wasp-mcp · almond · chestnut · unreal-mcp · ginkgo · betelnut — a family of tools that let language models draw, aggregate, simulate, film, compile and inhabit</p>
 </header>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track mono">
-    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
-    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
+    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — COMPILE → SOLVE → REALIZE → VERIFY — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
+    <span>SPEAK → PLACE → RUN → SEE — GENERATE → SIMULATE → CRITIQUE → REGENERATE — PROMPT → SPLAT → COLLIDER → INHABIT — COMPILE → SOLVE → REALIZE → VERIFY — LOAD → ASK → SYNTHESIZE → DECIDE — </span>
   </div>
 </div>
 
@@ -180,10 +180,40 @@
     </div>
   </article>
 
-  <!-- 05 · BETELNUT -->
-  <article class="project reveal" id="p-betelnut">
+  <!-- 05 · GINKGO -->
+  <article class="project reveal" id="p-ginkgo">
     <div class="p-head">
       <span class="p-num mono">T.05</span>
+      <h3>GINKGO</h3>
+      <div class="p-tags mono"><span>GAME COMPILER</span><span>UE 5.8 × MCP</span><span>396 TESTS GREEN</span></div>
+    </div>
+    <div class="p-body">
+      <div class="p-hero sim-stage poly-frame" id="ginkgo-stage">
+        <canvas id="sim-ginkgo"></canvas>
+        <div class="sim-hud mono"><span id="sim-ginkgo-phase">// LIVE SOLVER · CLICK TO RESEED</span></div>
+      </div>
+      <div class="steps" data-steps>
+        <div class="step poly"><span class="mono st-num">01 · COMPILE</span><p>One JSON intent — spaces, adjacencies, mechanics, objectives, endings — compiles into a versioned <b>GameManifest</b>. Ambiguity fails closed at the compiler, before an editor is ever touched.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · SOLVE</span><p>An explicit <b>layout solver</b> arranges zones and routes; a spatial analyzer scores adjacency, privacy gradient and path continuity, and weak scores return as <b>structured revision hints</b> that re-drive the solve. Seeded — same seed, same building, every time.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · REALIZE</span><p>The manifest becomes a deterministic <b>Unreal 5.8 plan</b> — geometry, materials, lighting rigs, atmosphere grades, CineCameras, PCG, navmesh — executed over MCP in <b>idempotent, resumable phases</b> with content-addressed receipts.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · VERIFY</span><p>Nothing is trusted. <b>Traversal walks the building</b>, portal clearance is measured, viewports are captured, and every mutation must return evidence before its phase is accepted. The demo game plays start → ending.</p></div>
+      </div>
+      <div class="p-text poly">
+        <p>Why it's different: most "AI makes a game" demos vibe-code Blueprints and hope. Ginkgo is a <em>compiler</em> — design intent is validated before the editor moves, every actor is ownership-tagged and reconciled, and each world carries a seeded <b>style card</b> (terrain archetype, palette, daylight, atmosphere) so consecutive seeds are <em>measurably</em> distinct places. Newest wing: outdoor <b>world generation</b> — seeded terrain synthesis with layout-driven terraforming, proven live across three endorsed rounds in UE 5.8 — the worlds below.</p>
+        <p class="mono small">INTENT → GAMEMANIFEST → SOLVER → UE 5.8 MCP → EVIDENCE · SEEDED STYLE CARDS · THE LEFT PANEL IS THE REAL SOLVER LOOP, RESEEDED LIVE</p>
+      </div>
+      <div class="p-gallery three-wide">
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/world_highlands.jpg" alt="Ginkgo-generated seeded highlands world at dusk in Unreal Engine, zone markers standing on solved terrain pads" loading="lazy"><figcaption class="mono">WORLD LAB · SEEDED HIGHLANDS AT DUSK · MARKERS ON SOLVED PADS</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/world_caldera.jpg" alt="Ginkgo-generated caldera world at noon in Unreal Engine — same compiler, different seed" loading="lazy"><figcaption class="mono">WORLD LAB · SAME COMPILER, NEW SEED · CALDERA AT NOON</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/world_ruin.jpg" alt="Ginkgo-generated dune world at dusk with a route graded toward a ruin marker" loading="lazy"><figcaption class="mono">WORLD LAB · ROUTE-GRADED DUNES · THE RUIN APPROACH</figcaption></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 · BETELNUT -->
+  <article class="project reveal" id="p-betelnut">
+    <div class="p-head">
+      <span class="p-num mono">T.06</span>
       <h3>BETELNUT</h3>
       <div class="p-tags mono"><span>MAP-FIRST</span><span>GEOSPATIAL</span><span>LIVE MVP</span></div>
     </div>

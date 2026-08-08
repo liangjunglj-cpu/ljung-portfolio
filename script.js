@@ -50,6 +50,7 @@
   const heroInner = document.querySelector('.hero-inner');
   const heroCanvas = document.getElementById('splats');
   addEventListener('scroll', () => {
+    if (!heroInner) return;
     const y = scrollY;
     if (y < innerHeight * 1.2) {
       heroInner.style.transform = `translateY(${y * 0.22}px)`;
@@ -595,6 +596,157 @@
       ctx.fillText('PARCELS ' + nVis + ' · IN BUFFER ' + inBuf + ' · R 200M', 30 * u, H - 34 * u);
     }
     requestAnimationFrame(draw);
+  })();
+
+  /* —— SIM 4 · ginkgo: live seeded layout solver — click to reseed —— */
+  (function simGinkgo() {
+    const s = simCanvas('sim-ginkgo'); if (!s) return;
+    const phaseEl = document.getElementById('sim-ginkgo-phase');
+    const stageEl = document.getElementById('ginkgo-stage');
+    const INTENT = '{ "game_id": "showcase_atrium", "spaces": 6, "ending": "archive_unsealed" }';
+    const ZONES = [
+      { n: 'PORCH',     w: .13, h: .11, pin: true },
+      { n: 'VESTIBULE', w: .10, h: .09 },
+      { n: 'ATRIUM',    w: .19, h: .17, hero: true },
+      { n: 'GALLERY',   w: .22, h: .10 },
+      { n: 'ALCOVE',    w: .10, h: .09 },
+      { n: 'ARCHIVE',   w: .12, h: .11, dark: true }
+    ];
+    const ADJ = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]];
+    let seed = 7, t0 = performance.now(), Z = [], iter = 0;
+    function reseed(ns) {
+      seed = ((ns % 10000) + 10000) % 10000;
+      let st = seed * 16807 + 1;
+      const rnd = () => (st = (st * 16807) % 2147483647) / 2147483647;
+      Z = ZONES.map(z => ({ ...z, x: .18 + rnd() * .62, y: .22 + rnd() * .55 }));
+      Z[0].x = .12; Z[0].y = .30 + rnd() * .40; // porch pinned at the west edge
+      t0 = performance.now(); iter = 0;
+    }
+    reseed(seed);
+    if (stageEl) stageEl.addEventListener('click', () => reseed(seed + 1));
+    function solveStep(k) {
+      // attract adjacent pairs to touching distance, repel overlaps — the real solver's shape
+      for (const [a, b] of ADJ) {
+        const A = Z[a], B = Z[b];
+        const dx = B.x - A.x, dy = B.y - A.y;
+        const d = Math.hypot(dx, dy) || 1e-4;
+        const want = (A.w + B.w) / 2 + .015;
+        const f = (d - want) * .5 * k;
+        if (!A.pin) { A.x += dx / d * f; A.y += dy / d * f; }
+        B.x -= dx / d * f * (A.pin ? 2 : 1); B.y -= dy / d * f * (A.pin ? 2 : 1);
+      }
+      for (let i = 0; i < Z.length; i++) for (let j = i + 1; j < Z.length; j++) {
+        const A = Z[i], B = Z[j];
+        const dx = B.x - A.x, dy = B.y - A.y;
+        const d = Math.hypot(dx, dy) || 1e-4;
+        const min = (A.w + B.w) / 2 + .012;
+        if (d < min) {
+          const f = (min - d) * .5 * k;
+          if (!A.pin) { A.x -= dx / d * f; A.y -= dy / d * f; }
+          if (!B.pin) { B.x += dx / d * f; B.y += dy / d * f; }
+        }
+      }
+      for (const z of Z) { z.x = Math.min(.92, Math.max(.08, z.x)); z.y = Math.min(.86, Math.max(.14, z.y)); }
+    }
+    function score() {
+      let sat = 0;
+      for (const [a, b] of ADJ) {
+        const d = Math.hypot(Z[b].x - Z[a].x, Z[b].y - Z[a].y);
+        const want = (Z[a].w + Z[b].w) / 2 + .015;
+        sat += Math.max(0, 1 - Math.abs(d - want) * 4);
+      }
+      return sat / ADJ.length;
+    }
+    function draw(now) {
+      requestAnimationFrame(draw);
+      const { ctx, W, H } = s; if (!W) return;
+      const el = (now - t0) / 1000;
+      ctx.clearRect(0, 0, W, H);
+      const u = W / 1000;
+      let phase;
+      if (el < 1.6) phase = '01 COMPILE · INTENT → GAMEMANIFEST';
+      else if (el < 4.4) { phase = '02 SOLVE · ZONES SETTLING'; solveStep(.16); iter++; }
+      else if (el < 6.0) phase = '03 REALIZE · DETERMINISTIC UE 5.8 PLAN';
+      else phase = '04 VERIFY · TRAVERSAL + EVIDENCE';
+      if (el > 14) { reseed(seed + 1); return; }
+      if (phaseEl) phaseEl.textContent = '// LIVE SOLVER · ' + phase + ' · SEED ' + String(seed).padStart(4, '0') + ' · CLICK TO RESEED';
+      // intent line typing
+      const nChars = Math.floor(Math.min(1, el / 1.4) * INTENT.length);
+      ctx.font = (11 * u * 1.6) + 'px ' + MONO;
+      ctx.fillStyle = '#e8e4dc';
+      ctx.fillText('> ' + INTENT.slice(0, nChars) + (el < 1.6 ? '▌' : ''), 26 * u, 46 * u);
+      const showZones = el > 1.2;
+      if (showZones) {
+        // adjacency links
+        ctx.strokeStyle = 'rgba(255,122,47,.6)'; ctx.lineWidth = 1.6 * u;
+        ctx.setLineDash(el > 6 ? [] : [6 * u, 6 * u]);
+        for (const [a, b] of ADJ) {
+          ctx.beginPath(); ctx.moveTo(Z[a].x * W, Z[a].y * H); ctx.lineTo(Z[b].x * W, Z[b].y * H); ctx.stroke();
+        }
+        ctx.setLineDash([]);
+        // zones
+        Z.forEach((z, i) => {
+          const x = (z.x - z.w / 2) * W, y = (z.y - z.h / 2) * H, w = z.w * W, h = z.h * H;
+          ctx.fillStyle = z.dark ? '#26262c' : (z.hero ? 'rgba(255,77,0,.16)' : 'rgba(232,228,220,.08)');
+          ctx.strokeStyle = z.dark ? '#7a90a8' : (z.hero ? '#FF4D00' : '#8a8a92');
+          ctx.lineWidth = (z.hero ? 2.2 : 1.4) * u;
+          ctx.beginPath(); ctx.roundRect(x, y, w, h, 4 * u); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = z.hero ? '#FF7A2F' : '#b8b4ac';
+          ctx.font = (9 * u * 1.6) + 'px ' + MONO;
+          ctx.fillText(z.n, x + 8 * u, y + 20 * u);
+        });
+      }
+      // verify: walk a dot along the chain + readout
+      if (el > 6.2) {
+        const walk = ((el - 6.2) * .3) % 1 * ADJ.length;
+        const li = Math.min(ADJ.length - 1, Math.floor(walk)), fr = walk - li;
+        const [a, b] = ADJ[li];
+        const px = (Z[a].x + (Z[b].x - Z[a].x) * fr) * W;
+        const py = (Z[a].y + (Z[b].y - Z[a].y) * fr) * H;
+        ctx.fillStyle = '#FF4D00';
+        ctx.beginPath(); ctx.arc(px, py, 6 * u, 0, 7); ctx.fill();
+        const sc = score();
+        ctx.font = (11 * u * 1.6) + 'px ' + MONO;
+        ctx.fillStyle = sc > .6 ? '#7ac88a' : '#FF7A2F';
+        ctx.fillText('SPATIAL ' + sc.toFixed(4) + ' · 6/6 REACHABLE · ENDING archive_unsealed', 26 * u, H - 34 * u);
+      } else if (el > 1.6) {
+        ctx.font = (11 * u * 1.6) + 'px ' + MONO;
+        ctx.fillStyle = '#b8b4ac';
+        ctx.fillText('ITER ' + iter + ' · ADJACENCY ' + score().toFixed(4), 26 * u, H - 34 * u);
+      }
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  /* —— museum depth HUD: scroll = descent through the section —— */
+  (function depthHud() {
+    if (document.body.dataset.page !== 'museum') return;
+    const hud = document.getElementById('depth-hud');
+    if (!hud) return;
+    const val = document.getElementById('depth-val');
+    const zone = document.getElementById('depth-zone');
+    const bar = document.getElementById('depth-bar');
+    // scroll maps to the visitor sequence: +2 m gateway → −42 m commons
+    // thresholds descend; the deepest matching label wins
+    const STATIONS = [
+      [0, 'THE DESCENT'], [-14, 'THE FAMILY WING'], [-26, 'THE GAP ROOM'], [-36, 'THE COMMONS']
+    ];
+    const update = () => {
+      const h = document.documentElement;
+      const p = Math.min(1, Math.max(0, h.scrollTop / (h.scrollHeight - h.clientHeight)));
+      hud.classList.toggle('on', h.scrollTop > innerHeight * .25);
+      const depth = 2 - p * 44; // +2 m to −42 m
+      hud.classList.toggle('below', depth < 0);
+      if (val) val.textContent = (depth >= 0 ? '+' : '−') + Math.abs(depth).toFixed(1) + ' M';
+      if (bar) bar.style.width = (p * 100) + '%';
+      if (zone) {
+        let label = 'THE GATEWAY';
+        for (const [d, n] of STATIONS) if (depth <= d) label = n;
+        zone.textContent = label;
+      }
+    };
+    addEventListener('scroll', update, { passive: true });
+    update();
   })();
 
   /* —— hero splat field: orange gaussian-ish particles —— */

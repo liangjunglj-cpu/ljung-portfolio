@@ -106,6 +106,34 @@
     </div>
   </article>
 
+  <!-- THE WALK · playable first-person build -->
+  <article class="project reveal" id="p-walk">
+    <div class="p-head">
+      <span class="p-num mono">P.03</span>
+      <h3>THE WALK</h3>
+      <div class="p-tags mono"><span>PLAYABLE</span><span>WASD + MOUSE</span><span>SIX STATIONS</span></div>
+    </div>
+    <div class="walk-frame poly-frame">
+      <div id="walk-stage">
+        <div class="walk-overlay" id="walk-overlay">
+          <p class="mono">R.05 · THE MUSEUM, WALKABLE · JETTY → GATEWAY → DESCENT → FAMILY WING → GAP ROOM → COMMONS</p>
+          <button class="walk-start mono" id="walk-start">ENTER THE BUILDING</button>
+          <p class="mono wo-hint">WASD MOVE · MOUSE LOOK · ESC SURFACES<br>TOUCH — DRAG TO LOOK · HOLD ● TO WALK</p>
+        </div>
+        <div class="walk-hud mono" id="walk-hud" hidden>
+          <span class="wh-station" id="walk-station">S1 · THE CROSSING</span>
+          <span class="wh-depth" id="walk-depth">+0.4 M</span>
+          <span class="wh-temp" id="walk-temp">−12°C</span>
+          <span class="wh-note" id="walk-note"></span>
+          <span class="wh-cross" aria-hidden="true"></span>
+          <button class="wh-exit" id="walk-exit">✕ SURFACE</button>
+          <button class="wh-go" id="walk-go" aria-label="Walk forward">●</button>
+        </div>
+      </div>
+    </div>
+    <p class="text-rule mono reveal">THE SENSORY SCRIPT, EXECUTABLE — cross the water, give your fingertip to the gateway, descend until daylight dies, count the ice-caps at every 4.4 M joint, read the family rooms by their brightness, weigh the two shadows in the gap room, and earn the first warm rail at the commons. Built from the same kit as the drawings: rods, joints, panels, nothing else.</p>
+  </article>
+
   <!-- ARCHIVE · horizontal scroll drawing set -->
   <section class="hscroll" id="archive" aria-label="Drawing archive">
     <div class="hscroll-sticky">
@@ -123,7 +151,7 @@
   <!-- THE SENSORY SCRIPT -->
   <article class="project reveal">
     <div class="p-head">
-      <span class="p-num mono">P.03</span>
+      <span class="p-num mono">P.04</span>
       <h3>THE SENSORY SCRIPT</h3>
       <div class="p-tags mono"><span>STATION BY STATION</span><span>COMPANION TO D12</span><span>NO SIGNAGE SPEAKS</span></div>
     </div>
@@ -141,7 +169,7 @@
   <!-- WORKING RULES / EXPERIMENTS -->
   <article class="project reveal">
     <div class="p-head">
-      <span class="p-num mono">P.04</span>
+      <span class="p-num mono">P.05</span>
       <h3>WORKING RULES</h3>
       <div class="p-tags mono"><span>EXPERIMENTS IN GOVERNANCE</span><span>14 NUMBERS PER MEMORY</span></div>
     </div>
@@ -168,6 +196,8 @@
   <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
 </div>
 
+<script defer src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
 <script defer src="script.js"></script>
+<script defer src="walk.js"></script>
 </body>
 </html>

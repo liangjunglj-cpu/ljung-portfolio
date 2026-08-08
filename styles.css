@@ -476,6 +476,27 @@ body.walking .nav,.walking .cursor,.walking .cursor-ring{display:none}
 }
 @media (hover:none){.wh-go,.wh-jump{display:flex}}
 
+/* —— view transitions (cross-document page morphs) —— */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .38s cubic-bezier(.2,.8,.2,1) both}
+::view-transition-new(root){animation:vt-in .38s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-out{to{opacity:0;transform:translateY(-16px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(16px)}}
+::view-transition-group(*){animation-duration:.42s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+.nav{view-transition-name:site-nav}
+.marquee{view-transition-name:band}
+/* index card titles morph into page titles */
+.vt-tools{view-transition-name:room-tools}
+.vt-studio{view-transition-name:room-studio}
+.vt-art{view-transition-name:room-art}
+.vt-museum{view-transition-name:room-museum}
+.vt-dream{view-transition-name:room-dream}
+/* named elements must be visible at snapshot time — exempt them from the scroll-reveal hide */
+.vt-tools,.vt-studio,.vt-art,.vt-museum,.vt-dream{opacity:1 !important;transform:none !important}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*),::view-transition-old(root),::view-transition-new(root){animation:none}
+}
+
 /* —— lightbox —— */
 .lightbox{position:fixed;inset:0;z-index:2000;background:rgba(13,13,15,.92);display:none;align-items:center;justify-content:center;padding:4vmin}
 .lightbox.open{display:flex}

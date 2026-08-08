@@ -599,3 +599,8 @@ body.walking .descent-tint{display:none}
   .passport-chip{display:none}
   .passport-panel{display:none}
 }
+
+/* -- passport secrets -- */
+.pp-hint{opacity:.62;font-size:.92em;font-style:italic}
+.pp-pop{animation:pp-pop .8s cubic-bezier(.2,.8,.2,1)}
+@keyframes pp-pop{35%{transform:scale(1.14);color:#FF4D00}}

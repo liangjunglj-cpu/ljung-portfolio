@@ -31,6 +31,12 @@
   let groundY = 0.4, vy = 0, grounded = true;
   const keys = {};
   let touchGo = false, touchJump = false, lastStation = '';
+  const secretsSent = {};
+  function secret(id) {
+    if (secretsSent[id]) return;
+    secretsSent[id] = true;
+    try { dispatchEvent(new CustomEvent('mom:secret', { detail: { id } })); } catch (e) {}
+  }
 
   /* —— walkable floors (AABBs; highest within step window wins) —— */
   const floors = [];
@@ -468,6 +474,8 @@
         pos.x = 0; pos.z = 28; groundY = 0.4; pos.y = 2.1; vy = 0; grounded = true;
       }
     }
+    if (grounded && groundY === 0) secret('on_the_ice');
+    if (grounded && groundY <= -25) secret('sunk_archive');
 
     const st = stationAt(pos);
     if (st !== lastStation) {

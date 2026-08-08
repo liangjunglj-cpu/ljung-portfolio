@@ -376,6 +376,7 @@
     if (doorMesh && state.doorOpen && doorMesh.position.y > -2.5) doorMesh.position.y -= dt * 2.2;
     if (!state.ended && state.doorOpen && zn && zn.id === 'archive') {
       state.ended = true;
+      try { dispatchEvent(new CustomEvent('mom:secret', { detail: { id: 'archive_unsealed' } })); } catch (e) {}
       if (endEl) {
         endEl.hidden = false;
         if (endBody) endBody.textContent =

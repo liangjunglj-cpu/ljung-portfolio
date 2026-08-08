@@ -220,7 +220,15 @@
     const strokes = [];
     let drawing = false, rafOn = false;
     addEventListener('pointerdown', e => { if (e.button === 0) { drawing = true; strokes.push({ pts: [], t0: performance.now() }); } });
-    addEventListener('pointerup', () => { drawing = false; });
+    let inkSecret = false;
+    addEventListener('pointerup', () => {
+      drawing = false;
+      const s = strokes[strokes.length - 1];
+      if (!inkSecret && s && s.pts.length >= 6) {
+        inkSecret = true;
+        try { dispatchEvent(new CustomEvent('mom:secret', { detail: { id: 'wet_ink' } })); } catch (e) {}
+      }
+    });
     addEventListener('pointermove', e => {
       if (!drawing || !(e.buttons & 1)) return;
       const s = strokes[strokes.length - 1];

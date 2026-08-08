@@ -28,9 +28,9 @@
   let built = false, live = false, raf = 0, lastT = 0;
   let yaw = 0, pitch = 0;
   const pos = { x: 0, y: 2.1, z: 28 };
-  let groundY = 0.4;
+  let groundY = 0.4, vy = 0, grounded = true;
   const keys = {};
-  let touchGo = false;
+  let touchGo = false, touchJump = false, lastStation = '';
 
   /* —— walkable floors (AABBs; highest within step window wins) —— */
   const floors = [];
@@ -40,6 +40,17 @@
     for (const f of floors) {
       if (x >= f.x0 && x <= f.x1 && z >= f.z0 && z <= f.z1 &&
           f.y <= yRef + 0.55 && f.y >= yRef - 1.7) {
+        if (best === null || f.y > best) best = f.y;
+      }
+    }
+    return best;
+  }
+  // landing probe for airborne movement: highest floor just below the feet
+  function landAt(x, z, top, drop) {
+    let best = null;
+    for (const f of floors) {
+      if (x >= f.x0 && x <= f.x1 && z >= f.z0 && z <= f.z1 &&
+          f.y <= top && f.y >= top - drop) {
         if (best === null || f.y > best) best = f.y;
       }
     }
@@ -157,6 +168,16 @@
     water.rotation.x = -Math.PI / 2; water.position.y = 0;
     scene.add(water);
 
+    /* FROZEN STRAIT — walkable sea ice everywhere outside the shaft */
+    const iceSheet = new T.MeshLambertMaterial({ color: 0xdfe9ef, transparent: true, opacity: 0.9 });
+    [[-60, 60, 7.2, 60], [-60, 60, -60, -13.2], [-60, -7.2, -13.2, 7.2], [7.2, 60, -13.2, 7.2]]
+      .forEach(([x0, x1, z0, z1]) => {
+        const m = new T.Mesh(new T.BoxGeometry(x1 - x0, 0.05, z1 - z0), iceSheet);
+        m.position.set((x0 + x1) / 2, -0.005, (z0 + z1) / 2);
+        scene.add(m);
+        addFloor(x0, x1, z0, z1, 0);
+      });
+
     /* JETTY (S1) — y 0.4, z 30 → 9, then steps up to the gateway door */
     run(0, 30, 0, 9, 0.4, 0.4, 2);
     run(0, 9, 0, 7, 0.4, 2.0, 2);
@@ -202,8 +223,11 @@
       g.setAttribute('position', new T.BufferAttribute(new Float32Array(pts), 3));
       scene.add(new T.Points(g, new T.PointsMaterial({ color: 0x7fd4ff, size: 0.2, transparent: true, opacity: 0.85, blending: T.AdditiveBlending, depthWrite: false })));
     }
-    // shaft bottom slab
+    // shaft bottom slab — the sunk archive floor; falls land here, steps climb back to the ring
     pushBox(darkM, 0, -25.2, -3, 14, 0.3, 20);
+    addFloor(-6.9, 6.9, -12.9, 6.9, -25.05);
+    pushBox(plankM, 0, -24.75, -11.4, 2, 0.14, 1.1); addFloor(-1, 1, -11.95, -10.85, -24.68);
+    pushBox(plankM, 0, -24.4, -12.3, 2, 0.14, 0.9); addFloor(-1, 1, -12.75, -11.85, -24.33);
 
     /* DESCENT (S3) — 8 switchback runs, 2 loops, y 2 → −24 */
     const NW = [-6.25, 5.25], SW = [-6.25, -12.25], SE = [6.25, -12.25], NE = [6.25, 5.25];
@@ -214,10 +238,16 @@
     loop.forEach(([a, b], i) => {
       const y1 = i === loop.length - 1 ? -24 : y - 26 * (lens[i] / total);
       pad(a[0], a[1], y, 1.5);
+      pushBox(warmM, a[0], y + 1.4, a[1], 0.14, 0.55, 0.14); // amber wayfinding pin
       run(a[0], a[1], b[0], b[1], y, y1, 1.5);
       y = y1;
     });
     pad(NW[0], NW[1], -24, 1.5);
+    // route pins: connector off the platform, ring door, both stair mouths
+    pushBox(warmM, -5.5, 3.4, 5.25, 0.14, 0.55, 0.14);
+    pushBox(warmM, 0, -22.6, -12.4, 0.14, 0.55, 0.14);
+    pushBox(warmM, 0, -22.6, -30.6, 0.14, 0.55, 0.14);
+    pushBox(warmM, 0, -27.6, -46.6, 0.14, 0.55, 0.14);
     /* ring at −24 (flat perimeter) + south door bridge */
     run(NW[0], NW[1], SW[0], SW[1], -24, -24, 1.5);
     run(SW[0], SW[1], SE[0], SE[1], -24, -24, 1.5);
@@ -314,18 +344,23 @@
   /* —— stations —— */
   const S = {
     S1: { k: 'S1 · THE CROSSING', t: '−12°C', n: 'engine, hull slap, wind — no music, ever' },
-    S2: { k: 'S2 · THE GATEWAY', t: '−9°C', n: 'bare fingertip on the release — one deliberate discomfort' },
+    S2: { k: 'S2 · THE GATEWAY', t: '−9°C', n: 'follow the amber pins west, then down — SPACE clears the rails' },
     S3: { k: 'S3 · THE DESCENT', t: '−1°C', n: 'daylight dies in the first four meters' },
     S4: { k: 'S4 · THE FAMILY WING', t: '+2°C', n: 'a room’s brightness IS its crowding' },
     S5: { k: 'S5 · THE GAP ROOM', t: '+2°C', n: 'two shadows that do not agree — the one hands-off room' },
     S6: { k: 'S6 · THE COMMONS', t: '+18°C', n: 'THE BYLAWS ARE REPRINTED · THE OLD PRINTING JOINS THE ARCHIVE' }
   };
   function stationAt(p) {
-    if (p.z < -55) return 'S6';
-    if (p.z < -39.5) return 'S5';
-    if (p.z < -13.4) return 'S4';
-    if (p.z < 8.4) return (p.y > 1.2 && p.z > -1.2) ? 'S2' : 'S3';
-    return 'S1';
+    const feet = p.y - 1.7;
+    if (feet < -20) { // the buried wings
+      if (p.z < -55) return 'S6';
+      if (p.z < -39.5) return 'S5';
+      if (p.z < -13.4) return 'S4';
+    }
+    const inShaft = Math.abs(p.x) < 7.4 && p.z > -13.4 && p.z < 7.2;
+    if (inShaft) return feet > 1.2 ? 'S2' : 'S3';
+    if (p.z < 8.6 && p.z > -1.2 && Math.abs(p.x) < 4.4 && feet > 1.2) return 'S2';
+    return 'S1'; // jetty and the frozen strait
   }
 
   /* —— ambience (lerped each frame) —— */
@@ -394,6 +429,8 @@
     goBtn.addEventListener('touchstart', e => { touchGo = true; e.preventDefault(); }, { passive: false });
     goBtn.addEventListener('touchend', () => { touchGo = false; }, { passive: true });
   }
+  const jumpBtn = document.getElementById('walk-jump');
+  if (jumpBtn) jumpBtn.addEventListener('touchstart', e => { touchJump = true; e.preventDefault(); }, { passive: false });
 
   /* —— movement + frame —— */
   function tick(dt) {
@@ -408,14 +445,35 @@
     if (l > 0) {
       const sp = 3.6 * dt / l;
       const nx = pos.x + mx * sp, nz = pos.z + mz * sp;
-      const fx = floorAt(nx, pos.z, groundY);
-      if (fx !== null) { pos.x = nx; groundY = fx; }
-      const fz = floorAt(pos.x, nz, groundY);
-      if (fz !== null) { pos.z = nz; groundY = fz; }
+      if (grounded) {
+        const fx = floorAt(nx, pos.z, groundY);
+        if (fx !== null) { pos.x = nx; groundY = fx; }
+        const fz = floorAt(pos.x, nz, groundY);
+        if (fz !== null) { pos.z = nz; groundY = fz; }
+      } else { pos.x = nx; pos.z = nz; } // airborne: free — jumps clear rails and edges
     }
-    pos.y += (groundY + 1.7 - pos.y) * Math.min(1, dt * 9);
+    if ((keys.Space || touchJump) && grounded) { vy = 5.6; grounded = false; }
+    touchJump = false;
+    if (grounded) {
+      pos.y += (groundY + 1.7 - pos.y) * Math.min(1, dt * 9);
+    } else {
+      vy -= 12 * dt;
+      const drop = Math.max(0.35, -vy * dt + 0.35);
+      pos.y += vy * dt;
+      if (vy <= 0) {
+        const f = landAt(pos.x, pos.z, pos.y - 1.7 + 0.06, drop);
+        if (f !== null) { groundY = f; grounded = true; vy = 0; pos.y = f + 1.7; }
+      }
+      if (pos.y < -45) { // fell out of the world — resurface at the jetty
+        pos.x = 0; pos.z = 28; groundY = 0.4; pos.y = 2.1; vy = 0; grounded = true;
+      }
+    }
 
     const st = stationAt(pos);
+    if (st !== lastStation) {
+      lastStation = st;
+      try { dispatchEvent(new CustomEvent('mom:station', { detail: { id: st } })); } catch (e) {}
+    }
     setTargets(st);
     const k = Math.min(1, dt * 2.2);
     cur.fog.lerp(tgt.fog, k); cur.far += (tgt.far - cur.far) * k;
@@ -470,8 +528,9 @@
     overlay.hidden = true; hud.hidden = false;
     // reset player + input state
     pos.x = 0; pos.z = 28; groundY = 0.4; pos.y = 2.1; yaw = 0; pitch = 0;
+    vy = 0; grounded = true; lastStation = '';
     for (const k in keys) keys[k] = false;
-    touchGo = false; dragging = false;
+    touchGo = false; touchJump = false; dragging = false;
     size();
     lastT = performance.now();
     if (!raf) raf = requestAnimationFrame(frame);

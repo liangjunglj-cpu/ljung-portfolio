@@ -44,12 +44,12 @@
     const N = [
       { l: 'CLAUDE',     x: .50, y: .48, hub: 1, i: 'every nut speaks MCP to the same model — one conversation, many canvases' },
       { l: 'WASP-MCP',   x: .15, y: .20, a: '#p-wasp',     i: 'places real components on the live grasshopper canvas' },
-      { l: 'ALMOND',     x: .13, y: .76, a: '#p-almond',   i: 'proposes structure in rhino, then survives kangaroo + karamba' },
+      { l: 'ALMOND',     x: .13, y: .76, a: '#p-almond',   i: 'composes in rhino from verified parts, then survives its own structural solver' },
       { l: 'CHESTNUT',   x: .35, y: .12, a: '#p-chestnut', i: 'a sentence becomes a gaussian-splat world you can walk in vr' },
       { l: 'UNREAL-MCP', x: .65, y: .12, a: '#p-unreal',   i: 'scene, light and camera in ue5 — the cinematic end of the loop' },
       { l: 'GINKGO',     x: .85, y: .20, a: '#p-ginkgo',   i: 'compiles whole games — intent → solver → deterministic ue 5.8 plan' },
       { l: 'BETELNUT',   x: .87, y: .76, a: '#p-betelnut', i: 'map-first geospatial synthesis for planners, in the browser' },
-      { l: 'RHINO / GH', x: .28, y: .50, eng: 1, i: 'kangaroo form-finding · karamba checks · wasp aggregation' },
+      { l: 'RHINO / GH', x: .28, y: .50, eng: 1, i: 'native frame solver · karamba optional · wasp aggregation' },
       { l: 'UE 5.8',     x: .72, y: .50, eng: 1, i: 'the shared target: archviz light, cinematics, playable worlds' },
       { l: 'BROWSER',    x: .50, y: .87, eng: 1, i: 'webxr walks, geojson maps — and this site itself' }
     ];

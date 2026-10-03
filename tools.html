@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body data-page="tools">
 
@@ -81,7 +81,7 @@
     <div class="p-head">
       <span class="p-num mono">T.02</span>
       <h3>ALMOND</h3>
-      <div class="p-tags mono"><span>V1.1</span><span>CLAUDE → RHINO MCP</span><span>PHYSICS LOOP</span></div>
+      <div class="p-tags mono"><span>V0.7 RC · PYPI + RHINO PACKAGE MANAGER</span><span>CLAUDE → RHINO MCP</span><span>OWN STRUCTURAL SOLVER</span></div>
     </div>
     <div class="p-body">
       <div class="p-hero sim-stage poly-frame">
@@ -89,23 +89,30 @@
         <div class="sim-hud mono"><span id="sim-almond-phase">// SIMULATION · GENERATE → SIMULATE → CRITIQUE → REGENERATE</span></div>
       </div>
       <div class="steps" data-steps>
-        <div class="step poly"><span class="mono st-num">01 · GENERATE</span><p>Claude proposes structure in Rhino — not from primitives, but from a <b>repository of real structural elements</b> and, since v1.1, <b>IKEA's actual furniture catalogue</b>, pulled by what you specify.</p></div>
-        <div class="step poly"><span class="mono st-num">02 · SIMULATE</span><p>The proposal is submitted to <b>Kangaroo form-finding and Karamba structural checks</b>. Gravity is not optional. Members that overstress are named, not hidden.</p></div>
-        <div class="step poly"><span class="mono st-num">03 · CRITIQUE</span><p>The model <b>reads the physics results and argues with them</b> — a reasoning pass over deflections and utilisation before it touches the geometry again.</p></div>
-        <div class="step poly"><span class="mono st-num">04 · REGENERATE</span><p>A corrected proposal replaces the first. The loop repeats until the structure is something that is <b>actually possible</b> — AI that can defend what it draws.</p></div>
+        <div class="step poly"><span class="mono st-num">01 · GENERATE</span><p>Claude composes in Rhino from <b>verified parts</b>: a library of 50 models that each carry a passport of real dimensions and clearances, and a <b>scene ledger</b> that remembers what is already placed, so the model queries the room instead of guessing it.</p></div>
+        <div class="step poly"><span class="mono st-num">02 · SIMULATE</span><p>Since 0.7, Almond runs <b>its own 3D frame solver</b> inside Rhino: floor and furniture loads, Eurocode load combinations, rigid or pinned joints, buckling and sway. Karamba is now optional, not required. Gravity is still not optional.</p></div>
+        <div class="step poly"><span class="mono st-num">03 · CRITIQUE</span><p>A <b>results panel names every member, support and load case</b>: how hard each is working, how far it bends against its limit, and a plain pass or fail. The model reads those numbers and argues with them before touching the geometry again.</p></div>
+        <div class="step poly"><span class="mono st-num">04 · REGENERATE</span><p>A failing section is stepped up and the frame re-run until the checks pass: a <b>sizing loop</b> the model can defend line by line. AI that can show its working.</p></div>
       </div>
       <div class="p-text poly">
-        <p>Why it's different: generative AI is happy to draw the impossible. Almond closes the loop with physics — every form it proposes has survived simulation and its own critique. Case study: the <b>ARCC Tower</b>, a cable-stayed office mast with spiral stair, guy cables and IKEA-furnished floors — validated end-to-end by the bridge itself: <em>KARAMBA 3.1, HIGH CONFIDENCE, all structural checks OK, deflection 0.0&nbsp;mm within a 48&nbsp;mm limit.</em></p>
-        <p class="mono small">RHINO / GH ⇄ KANGAROO · KARAMBA ⇄ REASONING PASS · REPEAT · TCP 5000</p>
+        <p>Why it's different: most Rhino MCPs give the model one power, <em>run a script</em>, and generation stays blind. Almond is a semantic layer: real dimensions, memory of the scene, layout validation, and a structural check that needs no extra licence. First case study: the <b>ARCC Tower</b>, a cable-stayed office mast with spiral stair and guy cables, validated end to end through the bridge.</p>
+        <p class="mono small">RHINO 8 ⇄ TCP 5000 ⇄ PYTHON MCP · SCENE LEDGER · NATIVE FRAME SOLVER (EN 1990 / EN 1993-1-1) · STEEL CHECKED, OTHER MATERIALS INDICATIVE · A DESIGN-STAGE CHECK, NOT A CERTIFIED ONE</p>
+        <div class="p-links mono">
+          <a href="https://github.com/liangjunglj-cpu/almond-mcp" target="_blank" rel="noopener">GITHUB ↗</a>
+          <a href="https://pypi.org/project/almond-mcp/" target="_blank" rel="noopener">PYPI ↗</a>
+        </div>
       </div>
       <div class="p-gallery three-wide">
         <figure class="poly-frame span2"><video src="assets/video/doc_tg2.mp4" controls muted loop playsinline preload="metadata"></video><figcaption class="mono">FULL DEMO · ALMOND IN SESSION</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/almond/arcc_tower.jpg" alt="ARCC Tower — cable-stayed office mast with spiral stair, generated and validated by Almond" loading="lazy"><figcaption class="mono">ARCC TOWER · THE VALIDATED BUILD</figcaption></figure>
         <figure class="tilt poly-frame span2"><img src="assets/almond/arcc_validation.jpg" alt="Rhino command line showing RhinoAlmondBridge Karamba validation pass over the roof truss" loading="lazy"><figcaption class="mono">THE LOOP, LIVE · "VALIDATION PASS: ALL STRUCTURAL CHECKS OK · DEFLECTION 0.0MM (LIMIT 48.0MM)"</figcaption></figure>
-        <figure class="tilt poly-frame"><img src="assets/almond/arcc_interior_ikea.jpg" alt="ARCC Tower office floor furnished from IKEA's catalogue by Almond 1.1" loading="lazy"><figcaption class="mono">ALMOND 1.1 · IKEA CATALOGUE FIT-OUT</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/almond/arcc_truss_analysis.jpg" alt="Roof truss in technical display with structural analysis wireframe overlay" loading="lazy"><figcaption class="mono">ROOF TRUSS · ANALYSIS OVERLAY</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/almond/arcc_rhino_full.jpg" alt="Full ARCC Tower in Rhino with the AlmondBridge running on TCP 5000" loading="lazy"><figcaption class="mono">IN SESSION · BRIDGE ON TCP 5000 · 16 LAYERS</figcaption></figure>
-        <figure class="tilt poly-frame"><img src="assets/art/art_almond_ikea.jpg" alt="Almond 1.1 — furniture pulled from IKEA's catalogue" loading="lazy"><figcaption class="mono">DEV LOG · "MIGHT NEED TO ASK IF IKEA CAN HIRE ME"</figcaption></figure>
+        <figure class="tilt poly-frame span2"><img src="assets/almond/ns_results_panel.jpg" alt="Almond Results panel docked beside a furnished loft in Rhino, frame members coloured by utilisation, verdict Fail at 25.9 mm deflection" loading="lazy"><figcaption class="mono">0.7 · THE RESULTS PANEL · A FAIL IT WILL NOT HIDE: 25.9 MM AGAINST A 24.8 MM LIMIT</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/almond/ns_iteration.jpg" alt="Four runs of the same frame with increasing tube sections, from fail to pass" loading="lazy"><figcaption class="mono">THE SIZING LOOP · FOUR SECTIONS, FAIL → PASS</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/almond/ns_native_vs_karamba.jpg" alt="Same frame solved by Karamba3D and by Almond's native solver side by side" loading="lazy"><figcaption class="mono">SAME FRAME, SAME LOADS · KARAMBA3D VS ALMOND NATIVE</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/almond/ns_stability.jpg" alt="Buckling check: one frame stable, one sway-sensitive" loading="lazy"><figcaption class="mono">STABILITY · STABLE VS SWAY-SENSITIVE</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/almond/ns_load_combinations.jpg" alt="Load combination table with pass and fail rows per section size" loading="lazy"><figcaption class="mono">EUROCODE LOAD COMBINATIONS · ROW BY ROW</figcaption></figure>
       </div>
     </div>
   </article>
@@ -150,6 +157,36 @@
         <figure class="tilt poly-frame"><img src="assets/chestnut_app.jpg" alt="The Chestnut app — collider debug wireframe over a generated splat world" loading="lazy"><figcaption class="mono">THE APP · COLLIDER DEBUG OVER A LIVE WORLD</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/art/art_fable_rules.jpg" alt="Rule-based architecture experiments with Fable" loading="lazy"><figcaption class="mono">RULE-BASED EXPERIMENTS · FABLE</figcaption></figure>
       </div>
+
+      <div class="p-research" id="p-plan-model">
+        <div class="pr-head">
+          <span class="p-num mono">T.03b · RESEARCH · 2026.10</span>
+          <h4>TRAINING AN IMAGE MODEL FROM SCRATCH</h4>
+          <div class="p-tags mono"><span>TEXT → FLOOR PLAN</span><span>10.7M PARAMETERS</span><span>ONE LAPTOP GPU</span></div>
+        </div>
+        <div class="pr-body">
+          <div class="p-text poly">
+            <p>Chestnut's newest branch asks what it takes to <em>own</em> an image model rather than rent one. A small text-to-image model, trained from nothing on an 8&nbsp;GB laptop GPU, learns to draw floor plans from captions like "4 rooms, L shaped, entrance east".</p>
+            <p>The point is not a product; it is a <b>lab you can measure</b>. The training plans are generated by code, so every caption is exactly true, and a scorer reads each output back: is it a closed building, how many rooms, does the outline match? A three-minute run answers a question before any paid GPU time is spent.</p>
+            <p><b>What the numbers say so far.</b> Words alone plateau: exact room count sits near 30% whatever the training trick. Handing the model a <b>footprint outline</b> is the one lever that moves it. And one honest negative: that gain does not yet carry to captions the model has never seen.</p>
+            <div class="table-scroll">
+              <table class="res-table mono">
+                <thead><tr><th>400 PLANS · SAME EXTRA TRAINING</th><th>VALID</th><th>ROOMS EXACT</th><th>OUTLINE SHAPE</th><th>FIT (IoU)</th><th>UNSEEN CAPTIONS</th></tr></thead>
+                <tbody>
+                  <tr><td>Words only (control)</td><td>94%</td><td>28%</td><td>72%</td><td>n/a</td><td>19%</td></tr>
+                  <tr><td>Words + footprint</td><td>94%</td><td class="up">40%</td><td class="up">91%</td><td class="up">0.95</td><td>21%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mono small">64 PX · SYNTHETIC PLANS · SINGLE SEED · GAPS UNDER ~10 POINTS ARE NOISE · NEXT: 128 PX, THEN THE WINNING IDEAS MOVE TO AN ADAPTER ON AN OPEN BASE MODEL FOR ALMOND</p>
+          </div>
+          <div class="p-gallery" style="grid-template-columns:1fr;margin-top:0">
+            <figure class="poly-frame pixel"><img src="assets/chestnut/plan_path.png" alt="Fourteen frames of one generation: noise resolving into a two-room plan" loading="lazy"><figcaption class="mono">ONE GENERATION · NOISE → PLAN</figcaption></figure>
+            <figure class="poly-frame pixel"><img src="assets/chestnut/plan_grid_footprint.png" alt="Three rows: footprint outlines given to the model, the true plans, and the plans the model drew" loading="lazy"><figcaption class="mono">TOP: THE FOOTPRINT GIVEN · MIDDLE: A TRUE PLAN · BOTTOM: WHAT THE MODEL DREW</figcaption></figure>
+            <figure class="poly-frame pixel crop-top"><img src="assets/chestnut/plan_samples.png" alt="Ablation sheet: every training run drawing the same six captions, each output labelled with the room count the scorer read" loading="lazy"><figcaption class="mono">THE ABLATION SHEET · EVERY RUN DRAWS THE SAME SIX CAPTIONS · CLICK FOR ALL TWELVE ROWS</figcaption></figure>
+          </div>
+        </div>
+      </div>
     </div>
   </article>
 
@@ -185,7 +222,7 @@
     <div class="p-head">
       <span class="p-num mono">T.05</span>
       <h3>GINKGO</h3>
-      <div class="p-tags mono"><span>GAME COMPILER</span><span>UE 5.8 × MCP</span><span>396 TESTS GREEN</span></div>
+      <div class="p-tags mono"><span>GAME COMPILER</span><span>UE 5.8 × MCP</span><span>563 TESTS GREEN</span></div>
     </div>
     <div class="p-body">
       <div class="p-hero sim-stage poly-frame" id="ginkgo-stage">
@@ -199,7 +236,7 @@
         <div class="step poly"><span class="mono st-num">04 · VERIFY</span><p>Nothing is trusted. <b>Traversal walks the building</b>, portal clearance is measured, viewports are captured, and every mutation must return evidence before its phase is accepted. The demo game plays start → ending.</p></div>
       </div>
       <div class="p-text poly">
-        <p>Why it's different: most "AI makes a game" demos vibe-code Blueprints and hope. Ginkgo is a <em>compiler</em> — design intent is validated before the editor moves, every actor is ownership-tagged and reconciled, and each world carries a seeded <b>style card</b> (terrain archetype, palette, daylight, atmosphere) so consecutive seeds are <em>measurably</em> distinct places. Newest wing: outdoor <b>world generation</b> — seeded terrain synthesis with layout-driven terraforming, proven live across three endorsed rounds in UE 5.8 — the worlds below.</p>
+        <p>Why it's different: most "AI makes a game" demos vibe-code Blueprints and hope. Ginkgo is a <em>compiler</em> — design intent is validated before the editor moves, every actor is ownership-tagged and reconciled, and each world carries a seeded <b>style card</b> (terrain archetype, palette, daylight, atmosphere) so consecutive seeds are <em>measurably</em> distinct places. Newest wing: outdoor <b>world generation</b> — seeded terrain synthesis with layout-driven terraforming, proven live across three endorsed rounds in UE 5.8 — and now a library of <b>six complete settlements</b>, each compiled from a typology through Rhino into Unreal with its own terrain, kit of parts, textures and lighting. Both sets are below.</p>
         <p class="mono small">INTENT → GAMEMANIFEST → SOLVER → UE 5.8 MCP → EVIDENCE · SEEDED STYLE CARDS · THE LEFT PANEL IS THE REAL SOLVER LOOP, RESEEDED LIVE</p>
       </div>
       <div class="gk-play walk-frame poly-frame">
@@ -231,6 +268,12 @@
         <figure class="tilt poly-frame"><img src="assets/ginkgo/world_highlands.jpg" alt="Ginkgo-generated seeded highlands world at dusk in Unreal Engine, zone markers standing on solved terrain pads" loading="lazy"><figcaption class="mono">WORLD LAB · SEEDED HIGHLANDS AT DUSK · MARKERS ON SOLVED PADS</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/ginkgo/world_caldera.jpg" alt="Ginkgo-generated caldera world at noon in Unreal Engine — same compiler, different seed" loading="lazy"><figcaption class="mono">WORLD LAB · SAME COMPILER, NEW SEED · CALDERA AT NOON</figcaption></figure>
         <figure class="tilt poly-frame"><img src="assets/ginkgo/world_ruin.jpg" alt="Ginkgo-generated dune world at dusk with a route graded toward a ruin marker" loading="lazy"><figcaption class="mono">WORLD LAB · ROUTE-GRADED DUNES · THE RUIN APPROACH</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w1_salt_courtyard.jpg" alt="Street in a generated courtyard settlement of lime-plastered blocks on sand" loading="lazy"><figcaption class="mono">WORLD LIBRARY · W1 SALT COURTYARD MAT</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w2_cliff_terrace.jpg" alt="Long terraced building stepping along a cliff at sunset" loading="lazy"><figcaption class="mono">W2 CLIFF TERRACE · DUSK</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w3_stilt_lattice.jpg" alt="Timber stilt houses joined by decks over water" loading="lazy"><figcaption class="mono">W3 STILT LATTICE · DECKS OVER WATER</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w4_plug_in_spine.jpg" alt="Capsule units plugged into a concrete megastructure spine, seen from below" loading="lazy"><figcaption class="mono">W4 PLUG-IN SPINE · CAPSULES ON A FRAME</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w5_linear_ridge.jpg" alt="A long slab building running along a dune ridge, end bay cut open" loading="lazy"><figcaption class="mono">W5 LINEAR RIDGE · THE CUT END</figcaption></figure>
+        <figure class="tilt poly-frame"><img src="assets/ginkgo/w6_hull_stack.jpg" alt="Red container-like hulls stacked on a steel frame over grassland" loading="lazy"><figcaption class="mono">W6 HULL STACK · SAME COMPILER, SIXTH TYPOLOGY</figcaption></figure>
       </div>
     </div>
   </article>
@@ -283,9 +326,9 @@
 
 <script defer src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
 <script defer src="gaussian-splats-3d.js"></script>
-<script defer src="script.js?v=2"></script>
+<script defer src="script.js?v=3"></script>
 <script defer src="passport.js?v=3"></script>
-<script defer src="arcade.js?v=3"></script>
+<script defer src="arcade.js?v=4"></script>
 <script defer src="ginkgo-world.js?v=2"></script>
 </body>
 </html>

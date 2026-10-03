@@ -457,7 +457,7 @@
       const u = W / 1000;
       let phase, sag = 0, corrected = 0;
       if (t < .25) { phase = '01 GENERATE · FLAT SPAN PROPOSED'; }
-      else if (t < .5) { phase = '02 SIMULATE · KANGAROO / KARAMBA'; sag = Math.min(1, (t - .25) / .12); }
+      else if (t < .5) { phase = '02 SIMULATE · NATIVE FRAME SOLVER'; sag = Math.min(1, (t - .25) / .12); }
       else if (t < .68) { phase = '03 CRITIQUE · MID-SPAN OVERSTRESSED'; sag = 1; }
       else { phase = '04 REGENERATE · ARCH FOUND, CHECKS PASS'; sag = 1; corrected = Math.min(1, (t - .68) / .14); }
       if (phaseEl) phaseEl.textContent = '// SIMULATION · ' + phase;

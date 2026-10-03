@@ -624,3 +624,45 @@ body.walking .descent-tint{display:none}
   font-size:.6rem;letter-spacing:.22em;transition:background .2s
 }
 .pp-six:hover{background:var(--ink)}
+
+/* —— room six · project y2k + research blocks (2026.10) —— */
+.vt-y2k{view-transition-name:room-y2k;opacity:1 !important;transform:none !important}
+.y2k-hero{margin:0 0 90px}
+.y2k-hero img{aspect-ratio:16/9;object-fit:cover}
+.y2k-section{margin-bottom:110px}
+.shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+.shot-grid .span3{grid-column:1 / -1}
+.shot-grid .span3 img{aspect-ratio:21/9}
+.shot-grid.two{grid-template-columns:repeat(2,1fr);margin-top:18px}
+.shot-grid.strip{grid-template-columns:1fr;margin-top:18px}
+.shot-grid.strip img{aspect-ratio:auto}
+.shot-grid img{aspect-ratio:16/9;object-fit:cover}
+.shot-grid .span2{grid-column:span 2}
+.shot-grid.tall{grid-template-columns:repeat(5,1fr);margin-top:18px}
+.shot-grid.tall img{aspect-ratio:9/16}
+.shot-grid.posters img{aspect-ratio:1060/1500}
+@media(max-width:920px){
+  .shot-grid{grid-template-columns:repeat(2,1fr)}
+  .shot-grid.tall{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:560px){
+  .shot-grid,.shot-grid.two{grid-template-columns:1fr}
+  .shot-grid .span2{grid-column:auto}
+  .shot-grid.tall{grid-template-columns:repeat(2,1fr)}
+}
+.reel-duo{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
+@media(max-width:920px){.reel-duo{grid-template-columns:1fr}}
+.p-research{grid-column:1 / -1;margin-top:34px;border-top:2px solid var(--ink);padding-top:22px}
+.p-research .pr-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:20px}
+.p-research .pr-head h4{font-size:clamp(1.2rem,2.6vw,1.7rem);letter-spacing:-.01em}
+.p-research .pr-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.p-research .p-text,.p-research .p-gallery{grid-column:auto}
+@media(max-width:920px){.p-research .pr-body{grid-template-columns:1fr}}
+.pixel img{image-rendering:pixelated;background:#fff}
+.pixel.crop-top img{aspect-ratio:4/3;object-fit:cover;object-position:top}
+.table-scroll{overflow-x:auto;margin-top:16px}
+.res-table{width:100%;border-collapse:collapse;font-size:.7rem;letter-spacing:.04em}
+.res-table th,.res-table td{padding:8px 10px;text-align:right;border-bottom:1px solid rgba(22,20,16,.15);white-space:nowrap}
+.res-table th:first-child,.res-table td:first-child{text-align:left}
+.res-table th{font-weight:500;color:var(--ink-soft);letter-spacing:.12em;font-size:.6rem}
+.res-table td.up{color:var(--orange);font-weight:600}

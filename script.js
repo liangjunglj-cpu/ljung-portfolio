@@ -2,6 +2,11 @@
 (() => {
   const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
   const SPLAT_URL = 'assets/world_basalt.spz';
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+  // canvases keep their rAF loop but skip the drawing work while off screen
+  const seenIO = new IntersectionObserver(es => es.forEach(e => { e.target.__on = e.isIntersecting; }), { rootMargin: '160px' });
+  const watch = el => { if (el) { el.__on = true; seenIO.observe(el); } return el; };
 
   /* —— custom cursor —— */
   if (fine) {
@@ -11,7 +16,9 @@
     addEventListener('mousemove', e => {
       tx = e.clientX; ty = e.clientY;
       dot.style.left = tx + 'px'; dot.style.top = ty + 'px';
+      if (!document.body.classList.contains('cursor-live')) { rx = tx; ry = ty; document.body.classList.add('cursor-live'); }
     });
+    document.documentElement.addEventListener('mouseleave', () => document.body.classList.remove('cursor-live'));
     (function follow() {
       rx += (tx - rx) * 0.16; ry += (ty - ry) * 0.16;
       ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
@@ -27,7 +34,7 @@
   const bar = document.querySelector('.progress span');
   addEventListener('scroll', () => {
     const h = document.documentElement;
-    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    bar.style.width = (h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight) * 100) + '%';
   }, { passive: true });
 
   /* —— reveal on scroll (+ image wipes) —— */
@@ -36,7 +43,11 @@
     f.style.transitionDelay = (i % 3) * 0.1 + 's';
   });
   const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    if (e.isIntersecting) {
+      const el = e.target;
+      el.classList.add('in'); io.unobserve(el);
+      setTimeout(() => { el.style.transitionDelay = ''; }, 1400);
+    }
   }), { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   // fallback: never leave content hidden if IO doesn't fire (old browsers, throttled tabs)
@@ -50,7 +61,7 @@
   const heroInner = document.querySelector('.hero-inner');
   const heroCanvas = document.getElementById('splats');
   addEventListener('scroll', () => {
-    if (!heroInner) return;
+    if (!heroInner || calm) return;
     const y = scrollY;
     if (y < innerHeight * 1.2) {
       heroInner.style.transform = `translateY(${y * 0.22}px)`;
@@ -60,7 +71,7 @@
   }, { passive: true });
 
   /* —— tilt cards —— */
-  if (fine) document.querySelectorAll('.tilt').forEach(card => {
+  if (fine && !calm) document.querySelectorAll('.tilt').forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
@@ -70,17 +81,65 @@
     card.addEventListener('mouseleave', () => card.style.transform = '');
   });
 
-  /* —— lightbox —— */
+  /* —— lightbox: arrows, keyboard, swipe, caption —— */
   const lb = document.getElementById('lightbox');
-  const lbImg = lb.querySelector('img');
-  document.querySelectorAll('.poly-frame img').forEach(img => {
-    img.addEventListener('click', () => {
-      lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
+  if (lb) {
+    const lbImg = lb.querySelector('img');
+    const shots = [...document.querySelectorAll('.poly-frame img:not([data-nolb])')];
+    const mk = (cls, label, txt) => {
+      const b = document.createElement('button');
+      b.className = cls + ' mono'; b.setAttribute('aria-label', label); b.textContent = txt;
+      lb.appendChild(b); return b;
+    };
+    const prevB = mk('lb-nav lb-prev', 'Previous image', '←');
+    const nextB = mk('lb-nav lb-next', 'Next image', '→');
+    const cap = document.createElement('p'); cap.className = 'lb-cap mono'; lb.appendChild(cap);
+    const closeB = lb.querySelector('.lb-close');
+    let cur = -1, lastFocus = null;
+    const show = n => {
+      cur = (n + shots.length) % shots.length;
+      const img = shots[cur];
+      const fc = img.closest('figure')?.querySelector('figcaption');
+      lbImg.classList.remove('lb-in'); void lbImg.offsetWidth; lbImg.classList.add('lb-in');
+      lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt;
+      cap.textContent = (fc ? fc.textContent + ' · ' : '') + (cur + 1) + ' / ' + shots.length;
+    };
+    const open = n => {
+      lastFocus = document.activeElement;
+      lb.classList.add('open'); document.documentElement.classList.add('lb-lock');
+      show(n); if (closeB) closeB.focus();
+    };
+    const closeLb = () => {
+      if (!lb.classList.contains('open')) return;
+      lb.classList.remove('open'); document.documentElement.classList.remove('lb-lock');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+    shots.forEach((img, n) => {
+      img.tabIndex = 0; img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', 'Enlarge image' + (img.alt ? ': ' + img.alt : ''));
+      img.addEventListener('click', () => open(n));
+      img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); } });
     });
-  });
-  const closeLb = () => lb.classList.remove('open');
-  lb.addEventListener('click', closeLb);
-  addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+    prevB.addEventListener('click', e => { e.stopPropagation(); show(cur - 1); });
+    nextB.addEventListener('click', e => { e.stopPropagation(); show(cur + 1); });
+    lbImg.addEventListener('click', e => { e.stopPropagation(); show(cur + 1); });
+    lb.addEventListener('click', closeLb);
+    addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowRight') show(cur + 1);
+      else if (e.key === 'ArrowLeft') show(cur - 1);
+      else if (e.key === 'Tab') { e.preventDefault(); const f = [closeB, prevB, nextB].filter(Boolean); f[(f.indexOf(document.activeElement) + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus(); }
+    });
+    let sx = null;
+    lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 50) { show(cur + (dx < 0 ? 1 : -1)); e.preventDefault(); }
+    });
+    if (shots.length < 2) { prevB.hidden = nextB.hidden = true; }
+  }
 
   /* —— horizontal scroll archive —— */
   const hs = document.getElementById('archive');
@@ -128,7 +187,10 @@
       const a = Math.random() * Math.PI * 2, rr = Math.pow(Math.random(), .5);
       P.push({ a, rr, y: (Math.random() - .5), s: .5 + Math.random() * 2.2, warm: Math.random() < .3, o: .25 + Math.random() * .65 });
     }
+    watch(cc);
     (function draw() {
+      requestAnimationFrame(draw);
+      if (!cc.__on) return;
       t += 0.0022;
       ctx.clearRect(0, 0, W, H);
       for (const p of P) {
@@ -143,7 +205,6 @@
         ctx.beginPath(); ctx.ellipse(px, py, s * 1.6, s, ang, 0, 7); ctx.fill();
       }
       ctx.globalAlpha = 1;
-      requestAnimationFrame(draw);
     })();
   }
 
@@ -201,8 +262,10 @@
         targetAngle = p * Math.PI * 2.2;   // ~400° over the section
       }, { passive: true });
 
+      watch(stage);
       (function orbit() {
         requestAnimationFrame(orbit);
+        if (!stage.__on) return;
         angle += (targetAngle - angle) * 0.07 + 0.0008; // scroll-driven + idle drift
         camera.position.set(Math.sin(angle) * radius, height, Math.cos(angle) * radius);
         camera.lookAt(0, 0.3, 0);
@@ -276,8 +339,10 @@
     if (heroStatus) heroStatus.textContent = 'MESH · ABSTRACT FORM STUDY · ' + pos.count + ' VERTICES';
 
     let t = 0;
+    watch(heroStage);
     (function spin() {
       requestAnimationFrame(spin);
+      if (!heroStage.__on) return;
       t += 0.0016;
       // slow breathing of the form
       const p = group.children[0].geometry.attributes.position;
@@ -344,8 +409,9 @@
     if (!cv) return null;
     const ctx = cv.getContext('2d');
     const state = { cv, ctx, W: 0, H: 0 };
-    const resize = () => { state.W = cv.width = cv.offsetWidth * devicePixelRatio; state.H = cv.height = cv.offsetHeight * devicePixelRatio; };
+    const resize = () => { state.W = cv.width = cv.offsetWidth * DPR; state.H = cv.height = cv.offsetHeight * DPR; };
     resize(); addEventListener('resize', resize); addEventListener('load', resize);
+    watch(cv);
     return state;
   }
   const MONO = 'IBM Plex Mono, monospace';
@@ -372,7 +438,7 @@
     blocks.sort((a, b) => (a.gz - b.gz) || (a.gy - b.gy));
     function draw(now) {
       requestAnimationFrame(draw);
-      const { ctx, W, H } = s; if (!W) return;
+      const { ctx, W, H } = s; if (!W || !s.cv.__on) return;
       const t = (now % CYCLE) / CYCLE;
       ctx.clearRect(0, 0, W, H);
       const u = W / 1000; // unit scale
@@ -451,7 +517,7 @@
     const N = 11;
     function draw(now) {
       requestAnimationFrame(draw);
-      const { ctx, W, H } = s; if (!W) return;
+      const { ctx, W, H } = s; if (!W || !s.cv.__on) return;
       const t = (now % CYCLE) / CYCLE;
       ctx.clearRect(0, 0, W, H);
       const u = W / 1000;
@@ -536,7 +602,7 @@
     const road = [[.02, .82], [.22, .74], [.4, .78], [.62, .68], [.8, .72], [.98, .62]];
     function draw(now) {
       requestAnimationFrame(draw);
-      const { ctx, W, H } = s; if (!W) return;
+      const { ctx, W, H } = s; if (!W || !s.cv.__on) return;
       const t = (now % CYCLE) / CYCLE;
       ctx.clearRect(0, 0, W, H);
       const u = W / 1000;
@@ -659,7 +725,7 @@
     }
     function draw(now) {
       requestAnimationFrame(draw);
-      const { ctx, W, H } = s; if (!W) return;
+      const { ctx, W, H } = s; if (!W || !s.cv.__on) return;
       const el = (now - t0) / 1000;
       ctx.clearRect(0, 0, W, H);
       const u = W / 1000;
@@ -771,7 +837,10 @@
       const r = cv.getBoundingClientRect();
       mx = (e.clientX - r.left) / r.width; my = (e.clientY - r.top) / r.height;
     });
+    watch(cv);
     (function draw() {
+      requestAnimationFrame(draw);
+      if (!cv.__on) return;
       ctx.clearRect(0, 0, W, H);
       for (const p of pts) {
         p.x += p.vx; p.y += p.vy;
@@ -789,7 +858,6 @@
         ctx.fillStyle = g;
         ctx.beginPath(); ctx.arc(px, py, rad * 4, 0, 7); ctx.fill();
       }
-      requestAnimationFrame(draw);
     })();
   }
 })();

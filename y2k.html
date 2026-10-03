@@ -5,10 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project Y2K — Liang Jung</title>
 <meta name="description" content="Project Y2K (Two Fronts, working title) — an anime action RPG in Unreal Engine 5.8, built through an AI tool pipeline by Chen Liang Jung.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#FF4D00">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Project Y2K — Liang Jung">
+<meta property="og:description" content="Project Y2K (Two Fronts, working title) — an anime action RPG in Unreal Engine 5.8, built through an AI tool pipeline by Chen Liang Jung.">
+<meta property="og:url" content="https://liangjunglj-cpu.github.io/ljung-portfolio/y2k.html">
+<meta property="og:image" content="https://liangjunglj-cpu.github.io/ljung-portfolio/assets/og/y2k.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=11">
+<link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body data-page="y2k">
 
@@ -23,7 +31,8 @@
     <a href="studio1.html" data-n="02">studio</a>
     <a href="art.html" data-n="03">art</a>
     <a href="museum.html" data-n="04">museum</a>
-    <a href="index.html#contact" data-n="05">contact</a>
+    <a href="y2k.html" data-n="05" class="active">y2k</a>
+    <a href="index.html#contact" data-n="06">contact</a>
   </div>
   <div class="nav-meta mono">10 OPERATIVES · 6 DISTRICTS · UE 5.8</div>
 </nav>
@@ -43,21 +52,29 @@
 
 <main class="works">
 
-  <figure class="y2k-hero tilt poly-frame reveal">
-    <img src="assets/y2k/game_drowned_quarter.jpg" alt="Kohaku on a rooftop gantry looking up at teal-lit towers in the Drowned Quarter">
-    <figcaption class="mono">IN ENGINE · DROWNED QUARTER · ROOFTOP GANTRY · TOON-BANDED LIGHTING</figcaption>
-  </figure>
+  <div class="y2k-stage poly-frame reveal" id="y2k-stage">
+    <div class="ys-screen">
+      <img class="ys-poster" data-nolb src="assets/y2k/reel_poster.jpg" width="1280" height="720" alt="Camera pass through a neon canyon of towers in the Neon Front">
+      <video data-src="assets/video/y2k_city_reel.mp4" muted loop playsinline preload="none" aria-label="Thirty-six second camera reel through the city"></video>
+      <div class="ys-lines" aria-hidden="true"></div>
+      <div class="ys-scan" aria-hidden="true"></div>
+      <span class="ys-c tl" aria-hidden="true"></span><span class="ys-c tr" aria-hidden="true"></span><span class="ys-c bl" aria-hidden="true"></span><span class="ys-c br" aria-hidden="true"></span>
+      <div class="ys-hud top mono" aria-hidden="true"><span class="ys-rec"><span id="ys-state">REC</span> · NEON FRONT</span><span class="hide-s">CAM 01 · UE 5.8</span></div>
+      <div class="ys-hud bot mono" aria-hidden="true"><span class="hide-s">METRO PASS → NEON CANYON → BANNER DRIFT</span><span id="ys-time">00:00:00</span></div>
+    </div>
+    <p class="mono" style="font-size:.62rem;letter-spacing:.16em;color:var(--ink-soft);padding:9px 4px 2px">CITY REEL · IN ENGINE · EARLY BUILD (V010) · PLAYS MUTED</p>
+  </div>
 
   <!-- THE REEL -->
   <section class="y2k-section reveal">
     <div class="section-head">
-      <h2><span class="mono idx">01</span> THE CITY, MOVING</h2>
-      <p class="mono">unreal 5.8 · camera passes through the neon front</p>
+      <h2><span class="mono idx">01</span> THE GAME</h2>
+      <p class="mono">unreal 5.8 · third-person action rpg</p>
     </div>
     <div class="reel-duo">
-      <figure class="poly-frame">
-        <video src="assets/video/y2k_city_reel.mp4" poster="assets/y2k/reel_poster.jpg" controls muted loop playsinline preload="metadata"></video>
-        <figcaption class="mono">CITY REEL · METRO PASS → NEON CANYON → BANNER DRIFT · 36 S · EARLY BUILD (V010)</figcaption>
+      <figure class="tilt poly-frame">
+        <img width="1389" height="856" src="assets/y2k/game_drowned_quarter.jpg" alt="Kohaku on a rooftop gantry looking up at teal-lit towers in the Drowned Quarter" loading="lazy">
+        <figcaption class="mono">IN ENGINE · DROWNED QUARTER · ROOFTOP GANTRY · TOON-BANDED LIGHTING</figcaption>
       </figure>
       <div class="p-text poly">
         <p>A third-person action RPG in the gacha mould: fast gunplay, dodges and spells across a Y2K-maximalist megacity split between two war fronts. Every character and every block of the city is original.</p>
@@ -74,15 +91,15 @@
       <p class="mono">real frames from the playable build · hud live</p>
     </div>
     <div class="shot-grid">
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_market_fire.jpg" alt="Kohaku firing down a lantern-lit market street with the full HUD visible" loading="lazy"><figcaption class="mono">NEON RAIN MARKET · "MARKET SWEEP" · FIRING</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_carrier.jpg" alt="Combat against a carrier enemy on a rooftop under a magenta night sky" loading="lazy"><figcaption class="mono">ROOFTOP FIGHT · CARRIER-CLASS ENEMY</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_freeze.jpg" alt="Kohaku rolling under a frozen enemy soldier in the training plaza" loading="lazy"><figcaption class="mono">SPELL · FREEZE FRAME · A SOLDIER STOPPED MID-STRIKE</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_afterimage.jpg" alt="Two glowing copies of Kohaku flank her while a dummy spars" loading="lazy"><figcaption class="mono">SPELL · AFTERIMAGE · TWO DECOYS DRAW THE ATTACK</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_airship.jpg" alt="Kohaku mid-air beside a striped cargo airship between towers" loading="lazy"><figcaption class="mono">DENKI-GAI · A CARGO AIRSHIP DRIFTS THROUGH THE STREET</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/game_cutscene.jpg" alt="Close-up of Kohaku speaking in a letterboxed cutscene" loading="lazy"><figcaption class="mono">THE OPENING · CUTSCENE WITH SUBTITLES</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1280" height="719" src="assets/y2k/game_market_fire.jpg" alt="Kohaku firing down a lantern-lit market street with the full HUD visible" loading="lazy"><figcaption class="mono">NEON RAIN MARKET · "MARKET SWEEP" · FIRING</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1389" height="856" src="assets/y2k/game_carrier.jpg" alt="Combat against a carrier enemy on a rooftop under a magenta night sky" loading="lazy"><figcaption class="mono">ROOFTOP FIGHT · CARRIER-CLASS ENEMY</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1235" height="732" src="assets/y2k/game_freeze.jpg" alt="Kohaku rolling under a frozen enemy soldier in the training plaza" loading="lazy"><figcaption class="mono">SPELL · FREEZE FRAME · A SOLDIER STOPPED MID-STRIKE</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1235" height="732" src="assets/y2k/game_afterimage.jpg" alt="Two glowing copies of Kohaku flank her while a dummy spars" loading="lazy"><figcaption class="mono">SPELL · AFTERIMAGE · TWO DECOYS DRAW THE ATTACK</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1389" height="856" src="assets/y2k/game_airship.jpg" alt="Kohaku mid-air beside a striped cargo airship between towers" loading="lazy"><figcaption class="mono">DENKI-GAI · A CARGO AIRSHIP DRIFTS THROUGH THE STREET</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1389" height="856" src="assets/y2k/game_cutscene.jpg" alt="Close-up of Kohaku speaking in a letterboxed cutscene" loading="lazy"><figcaption class="mono">THE OPENING · CUTSCENE WITH SUBTITLES</figcaption></figure>
     </div>
     <div class="shot-grid strip">
-      <figure class="tilt poly-frame"><img src="assets/y2k/spells.jpg" alt="Three spell icons: an ice crystal in a viewfinder, a runner with echoes, a bolt over a speed dial" loading="lazy"><figcaption class="mono">SPELLBOOK · FREEZE FRAME (Q) · AFTERIMAGE (Z) · OVERDRIVE (X) · ICONS DRAWN IN CODE</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="547" src="assets/y2k/spells.jpg" alt="Three spell icons: an ice crystal in a viewfinder, a runner with echoes, a bolt over a speed dial" loading="lazy"><figcaption class="mono">SPELLBOOK · FREEZE FRAME (Q) · AFTERIMAGE (Z) · OVERDRIVE (X) · ICONS DRAWN IN CODE</figcaption></figure>
     </div>
   </section>
 
@@ -93,17 +110,17 @@
       <p class="mono">mirai ward hub + five districts · day and night</p>
     </div>
     <div class="shot-grid">
-      <figure class="tilt poly-frame span3"><img src="assets/y2k/city_hub_plaza.jpg" alt="Kohaku in a plaza ringed by stacked megastructures and billboards under a cloudy sky" loading="lazy"><figcaption class="mono">MIRAI WARD · THE HUB PLAZA, LOOKING UP</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_hub_gateway.jpg" alt="Kohaku walking down a wide road between glass towers and shopfront signage" loading="lazy"><figcaption class="mono">HUB · THE ROAD TO THE GATEWAY</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_hub_market.jpg" alt="Kohaku at a street crossing with towers leaning overhead" loading="lazy"><figcaption class="mono">HUB · MARKET STREET CROSSING</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_train.jpg" alt="Kohaku on a rail viaduct with a train passing below the skyline" loading="lazy"><figcaption class="mono">LINE B · THE VIADUCT</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_market_skyline.jpg" alt="Kohaku walking into a night market under a torii gate and neon signs" loading="lazy"><figcaption class="mono">NEON RAIN MARKET · NIGHT</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_drowned_skyline.jpg" alt="Dark tower faces lit by teal neon signs and a spotlight" loading="lazy"><figcaption class="mono">DROWNED QUARTER · SIGNAGE AND SPOTLIGHTS</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_fogdocks.jpg" alt="Towers washed in amber light with pink neon characters" loading="lazy"><figcaption class="mono">FOG DOCKS · SODIUM LIGHT</figcaption></figure>
+      <figure class="tilt poly-frame span3"><img width="1600" height="900" src="assets/y2k/city_hub_plaza.jpg" alt="Kohaku in a plaza ringed by stacked megastructures and billboards under a cloudy sky" loading="lazy"><figcaption class="mono">MIRAI WARD · THE HUB PLAZA, LOOKING UP</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_hub_gateway.jpg" alt="Kohaku walking down a wide road between glass towers and shopfront signage" loading="lazy"><figcaption class="mono">HUB · THE ROAD TO THE GATEWAY</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_hub_market.jpg" alt="Kohaku at a street crossing with towers leaning overhead" loading="lazy"><figcaption class="mono">HUB · MARKET STREET CROSSING</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_train.jpg" alt="Kohaku on a rail viaduct with a train passing below the skyline" loading="lazy"><figcaption class="mono">LINE B · THE VIADUCT</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_market_skyline.jpg" alt="Kohaku walking into a night market under a torii gate and neon signs" loading="lazy"><figcaption class="mono">NEON RAIN MARKET · NIGHT</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_drowned_skyline.jpg" alt="Dark tower faces lit by teal neon signs and a spotlight" loading="lazy"><figcaption class="mono">DROWNED QUARTER · SIGNAGE AND SPOTLIGHTS</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_fogdocks.jpg" alt="Towers washed in amber light with pink neon characters" loading="lazy"><figcaption class="mono">FOG DOCKS · SODIUM LIGHT</figcaption></figure>
     </div>
     <div class="shot-grid two">
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_mirai_aerial.jpg" alt="Aerial view of a dense, colourful megacity of stacked towers" loading="lazy"><figcaption class="mono">MIRAI WARD FROM THE AIR · EVERY TOWER PLACED BY SCRIPT</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/city_to_docks.jpg" alt="Low view down a crossing toward a red dock building and tilted towers" loading="lazy"><figcaption class="mono">THE ROAD OUT TO THE DOCKS</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_mirai_aerial.jpg" alt="Aerial view of a dense, colourful megacity of stacked towers" loading="lazy"><figcaption class="mono">MIRAI WARD FROM THE AIR · EVERY TOWER PLACED BY SCRIPT</figcaption></figure>
+      <figure class="tilt poly-frame"><img width="1600" height="900" src="assets/y2k/city_to_docks.jpg" alt="Low view down a crossing toward a red dock building and tilted towers" loading="lazy"><figcaption class="mono">THE ROAD OUT TO THE DOCKS</figcaption></figure>
     </div>
   </section>
 
@@ -111,15 +128,23 @@
   <section class="y2k-section reveal">
     <div class="section-head">
       <h2><span class="mono idx">04</span> DISTRICT FILES</h2>
-      <p class="mono">six districts · each card built from an in-engine capture</p>
+      <p class="mono">six districts · hover or tap a file to cut to it</p>
     </div>
-    <div class="shot-grid">
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_gateway.jpg" alt="District file 01, Neon Gateway" loading="lazy"><figcaption class="mono">01 · NEON GATEWAY</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_district.jpg" alt="District file 02, Neon District" loading="lazy"><figcaption class="mono">02 · NEON DISTRICT</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_exchange.jpg" alt="District file 03, Transit Exchange" loading="lazy"><figcaption class="mono">03 · TRANSIT EXCHANGE</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_market.jpg" alt="District file 04, Neon Rain Market" loading="lazy"><figcaption class="mono">04 · NEON RAIN MARKET</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_quarter.jpg" alt="District file 05, Drowned Quarter" loading="lazy"><figcaption class="mono">05 · DROWNED QUARTER</figcaption></figure>
-      <figure class="tilt poly-frame"><img src="assets/y2k/district_docks.jpg" alt="District file 06, Fog Docks" loading="lazy"><figcaption class="mono">06 · FOG DOCKS</figcaption></figure>
+    <div class="dsel poly-frame" id="dsel">
+      <div class="dsel-screen">
+        <img class="dsel-img" data-nolb alt="">
+        <img class="dsel-img" data-nolb alt="">
+        <div class="dsel-hud mono" aria-live="polite"><span class="dsel-num">01</span><span class="dsel-name">NEON GATEWAY</span><span class="dsel-sub">GATEWAY PATROL</span></div>
+        <div class="dsel-bar" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="shot-grid dcards">
+      <figure class="poly-frame" data-district="gateway" data-num="01" data-name="NEON GATEWAY" data-sub="GATEWAY PATROL" data-color="#8A6BFF" data-shot="assets/y2k/dv_gateway.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_gateway.jpg" alt="District file 01, Neon Gateway" loading="lazy"><figcaption class="mono">01 · NEON GATEWAY</figcaption></figure>
+      <figure class="poly-frame" data-district="district" data-num="02" data-name="NEON DISTRICT" data-sub="REALITY THRESHOLD" data-color="#FF2B6B" data-shot="assets/y2k/dv_district.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_district.jpg" alt="District file 02, Neon District" loading="lazy"><figcaption class="mono">02 · NEON DISTRICT</figcaption></figure>
+      <figure class="poly-frame" data-district="exchange" data-num="03" data-name="TRANSIT EXCHANGE" data-sub="CONCOURSE SWEEP" data-color="#1FE3FF" data-shot="assets/y2k/dv_exchange.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_exchange.jpg" alt="District file 03, Transit Exchange" loading="lazy"><figcaption class="mono">03 · TRANSIT EXCHANGE</figcaption></figure>
+      <figure class="poly-frame" data-district="market" data-num="04" data-name="NEON RAIN MARKET" data-sub="MARKET SWEEP" data-color="#FF6A00" data-shot="assets/y2k/dv_market.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_market.jpg" alt="District file 04, Neon Rain Market" loading="lazy"><figcaption class="mono">04 · NEON RAIN MARKET</figcaption></figure>
+      <figure class="poly-frame" data-district="quarter" data-num="05" data-name="DROWNED QUARTER" data-sub="FLOODED PATROL" data-color="#00D1B8" data-shot="assets/y2k/dv_quarter.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_quarter.jpg" alt="District file 05, Drowned Quarter" loading="lazy"><figcaption class="mono">05 · DROWNED QUARTER</figcaption></figure>
+      <figure class="poly-frame" data-district="docks" data-num="06" data-name="FOG DOCKS" data-sub="CONTAINER YARD" data-color="#FFC23D" data-shot="assets/y2k/dv_docks.jpg"><img data-nolb width="1200" height="675" src="assets/y2k/district_docks.jpg" alt="District file 06, Fog Docks" loading="lazy"><figcaption class="mono">06 · FOG DOCKS</figcaption></figure>
     </div>
   </section>
 
@@ -128,6 +153,13 @@
     <div class="section-head">
       <h2><span class="mono idx">05</span> HOW IT IS MADE</h2>
       <p class="mono">sheet → mesh → city → engine → evidence</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat poly"><b data-count="6">6</b><span class="mono">DISTRICTS AROUND ONE HUB</span></div>
+      <div class="stat poly"><b data-count="10">10</b><span class="mono">ORIGINAL OPERATIVES</span></div>
+      <div class="stat poly"><b data-count="4398">4,398</b><span class="mono">OBJECTS IN THE FIRST FRONT, ONE SEED</span></div>
+      <div class="stat poly"><b data-count="233">233</b><span class="mono">SCREENSHOT CHECKS PER RELEASE</span></div>
+      <div class="stat poly"><b data-count="16">16</b><span class="mono">TRAINING LESSONS</span></div>
     </div>
     <div class="text-grid two-col">
       <div class="t-card poly"><span class="mono tc-num">01 · CHARACTERS</span><h4>Sheet to rigged mesh</h4><p>Each operative starts as a character sheet and a four-view turnaround, becomes a textured mesh in Meshy, is remeshed to game resolution, rigged, and retargeted onto Unreal's locomotion. Kohaku was first through the whole chain.</p></div>
@@ -148,11 +180,12 @@
 </footer>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-  <img src="" alt="">
+  <img alt="">
   <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
 </div>
 
-<script defer src="script.js?v=2"></script>
+<script defer src="script.js?v=4"></script>
+<script defer src="fx.js?v=1"></script>
 <script defer src="passport.js?v=3"></script>
 </body>
 </html>

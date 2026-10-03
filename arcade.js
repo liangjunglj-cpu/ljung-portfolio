@@ -1,5 +1,8 @@
 /* page arcades — one gamified, informative layer per room */
 (() => {
+  // skip canvas drawing while a canvas is off screen
+  const __arcIO = new IntersectionObserver(es => es.forEach(e => { e.target.__off = !e.isIntersecting; }), { rootMargin: '160px' });
+  addEventListener('load', () => document.querySelectorAll('canvas').forEach(c => __arcIO.observe(c)));
   const page = document.body.dataset.page;
   const MONO = 'IBM Plex Mono, monospace';
   const el = (cls, html, tag) => {
@@ -71,7 +74,7 @@
 
     (function draw(now) {
       requestAnimationFrame(draw);
-      if (!W) return;
+      if (!W || cv.__off) return;
       ctx.clearRect(0, 0, W, H);
       const u = W / 1000;
       hot = null;
@@ -159,7 +162,7 @@
       });
       (function draw() {
         requestAnimationFrame(draw);
-        if (!W) return;
+        if (!W || cv.__off) return;
         ctx.clearRect(0, 0, W, H);
         const u = W / 680;
         const f = secP();
@@ -318,7 +321,7 @@
         cv.addEventListener('mouseleave', () => { mx = my = -1e4; });
         (function draw(now) {
           requestAnimationFrame(draw);
-          if (!W) return;
+          if (!W || cv.__off) return;
           ctx.clearRect(0, 0, W, H);
           const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.5;
           const rings = [R * 0.34, R * 0.58, R * 0.82];

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>LIANG JUNG — Architecture × AI × Art</title>
-<meta name="description" content="Portfolio of Chen Liang Jung — SUTD architecture student working across computational design, AI tooling and art.">
+<meta name="description" content="Portfolio of Chen Liang Jung — SUTD architecture student working across computational design, AI tooling and art. Walk the world: films, an arcade, an archive.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#FF4D00">
+<meta name="theme-color" content="#f7f7f5">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LIANG JUNG — Architecture × AI × Art">
 <meta property="og:description" content="Portfolio of Chen Liang Jung — SUTD architecture student working across computational design, AI tooling and art.">
@@ -15,179 +15,155 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=12">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body data-page="home">
+<a class="skip" href="archive.html">Skip the 3D world — open the plain archive page</a>
 
-<div class="cursor" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-<div class="progress" aria-hidden="true"><span></span></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
 
-<nav class="nav poly">
-  <a class="nav-logo" href="index.html">LJ<span class="blink">_</span></a>
-  <div class="nav-links">
-    <a href="tools.html" data-n="01">tools</a>
-    <a href="studio1.html" data-n="02">studio</a>
-    <a href="art.html" data-n="03">art</a>
-    <a href="museum.html" data-n="04">museum</a>
-    <a href="y2k.html" data-n="05">y2k</a>
-    <a href="#contact" data-n="06">contact</a>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="ld-in">
+    <span class="ld-mark">LJ<i>_</i></span>
+    <span class="ld-txt">BUILDING THE MODEL</span>
+    <span class="ld-bar"><i id="ld-bar"></i></span>
+    <span class="ld-pct" id="ld-pct">0%</span>
   </div>
-  <div class="nav-meta mono">SGP · 1.3521°N 103.8198°E</div>
+</div>
+
+<nav class="nav hud-nav" aria-label="Stations">
+  <a class="nav-logo" href="#s-intro">LJ<span class="blink">_</span></a>
+  <div class="nav-links">
+    <a href="#s-latest" data-n="01">latest</a>
+    <a href="#s-field" data-n="02">field</a>
+    <a href="#s-arcade" data-n="03">arcade</a>
+    <a href="#s-index" data-n="04">index</a>
+    <a href="#s-contact" data-n="05">contact</a>
+    <a href="#explore" data-n="06" class="nav-explore">explore</a>
+  </div>
+  <div class="nav-meta">SGP · 1.3521°N 103.8198°E</div>
 </nav>
 
-<!-- ── HERO ────────────────────────────────────────── -->
-<header class="hero" id="top">
-  <canvas id="splats" aria-hidden="true"></canvas>
-  <div id="hero3d" aria-hidden="true"></div>
-  <div class="hero-grid" aria-hidden="true"></div>
+<div class="hud-station" aria-hidden="true">
+  <span class="hs-no" id="hs-no">00</span>
+  <span class="hs-name" id="hs-name">ENTRANCE</span>
+  <span class="hs-ch" id="hs-ch">CH 0+000</span>
+</div>
+<div class="hud-rail" aria-hidden="true"><i id="hud-rail"></i></div>
+<div class="hover-tag" id="hover-tag" aria-hidden="true"></div>
 
-  <div class="hero-inner">
-    <p class="hero-kicker mono reveal">C.L.J — PORTFOLIO / V.2026.10</p>
-    <h1 class="hero-title">
-      <span class="line reveal">LIANG</span>
-      <span class="line reveal d1">JUNG<span class="accent">.</span></span>
-    </h1>
-    <div class="hero-sub poly reveal d2">
-      <p class="mono">architecture student @ <b>SUTD</b> · b.arch '28<br>
-      building tools where <span class="accent">AI</span>, <span class="accent">computation</span> &amp; <span class="accent">architecture</span> collide.</p>
-    </div>
-    <div class="hero-tags mono reveal d3">
-      <span>RHINO / GH</span><span>MCP TOOLING</span><span>GAUSSIAN SPLATS</span><span>WEBXR</span><span>GEOSPATIAL</span><span>UNREAL</span><span>GAME COMPILER</span><span>MODEL TRAINING</span>
-    </div>
-  </div>
-
-  <div class="hero-foot mono">
-    <span>SCROLL FOR THE INDEX</span>
-    <span id="hero3d-status">MESH · LOADING</span>
-    <span class="arrow">↓</span>
-  </div>
-</header>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track mono">
-    <span>ARCHITECTURE ✕ AI ✕ ART — DISCRETE AGGREGATION — MEMORY AS MATERIAL — SPLATS TO SPACE — MAP-FIRST — </span>
-    <span>ARCHITECTURE ✕ AI ✕ ART — DISCRETE AGGREGATION — MEMORY AS MATERIAL — SPLATS TO SPACE — MAP-FIRST — </span>
-  </div>
+<!-- play mode (docked at a machine) -->
+<div class="play" id="play" hidden>
+  <div class="play-head"><span class="pl-no" id="pl-no">M.01</span><span class="pl-title" id="pl-title">Capsule</span><button type="button" class="pl-exit" id="pl-exit">EXIT ✕</button></div>
+  <p class="pl-hint" id="pl-hint"></p>
+  <div class="pl-btns" id="pl-btns"></div>
 </div>
 
-<!-- ── STATEMENT ───────────────────────────────────── -->
-<section class="statement">
-  <blockquote class="reveal">
-    <p>"The machine does not know what it made. <span class="accent">You are responsible for knowing.</span>"</p>
-  </blockquote>
-  <blockquote class="reveal d1">
-    <p>"Authorship shifts — from making the object to <span class="accent">designing the conditions</span> under which it can appear."</p>
-  </blockquote>
-  <p class="statement-body mono reveal d2">Tools that submit their geometry to physics. An archive that rebuilds itself to match what people remember. A pen that makes the generated image answer for itself. Creation, held to consequence.</p>
-</section>
+<!-- free explore -->
+<div class="xp" id="xp" hidden>
+  <div class="play-head"><span class="pl-no">06</span><span class="pl-title">Free explore</span><button type="button" class="pl-exit" id="xp-exit">EXIT ✕</button></div>
+  <p class="pl-hint xp-desk">W A S D or arrows to walk · drag to look · shift to run · click a machine, drawer, film or easter egg · Esc to leave</p>
+  <p class="pl-hint xp-touch">Left thumb walks · right thumb looks · tap a machine, drawer, film or easter egg</p>
+</div>
 
-<!-- ── WORKS INDEX ─────────────────────────────────── -->
-<main id="works" class="works">
-  <div class="section-head reveal">
-    <h2><span class="mono idx">01</span> INDEX</h2>
-    <p class="mono">six rooms · 2025 — 2026</p>
-  </div>
+<!-- art viewer -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Art and field notes" hidden>
+  <figure class="vw-in">
+    <div class="vw-top"><span id="vw-kind">FROM THE @LJUNGART FEED</span><span id="vw-no">01 / 20</span><button type="button" id="vw-x" aria-label="Close">CLOSE ✕</button></div>
+    <img id="vw-img" alt="">
+    <figcaption id="vw-cap"></figcaption>
+    <div class="vw-bot"><button type="button" id="vw-prev" aria-label="Previous">← PREV</button><a href="art.html">ART &amp; FIELD NOTES ROOM →</a><a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">@LJUNGART ↗</a><button type="button" id="vw-next" aria-label="Next">NEXT →</button></div>
+  </figure>
+</div>
 
-  <div class="index-grid">
-    <a class="index-card poly-frame tilt reveal" href="tools.html">
-      <img width="960" height="720" src="assets/thumbs/tools.jpg" alt="wasp-mcp driving a live Grasshopper canvas" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.01 · MAIN ATTRACTION</span>
-        <h3 class="vt-tools">THE NUTS — TOOLS</h3>
-        <p class="mono">wasp-mcp · almond · chestnut · unreal-mcp · ginkgo · betelnut</p>
-      </div>
-    </a>
-    <a class="index-card poly-frame tilt reveal d1" href="studio1.html">
-      <img width="960" height="720" src="assets/thumbs/studio.jpg" alt="Inverted pyramid section-axonometric, MoMA Singapore" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.02</span>
-        <h3 class="vt-studio">CORE STUDIO 01</h3>
-        <p class="mono">four exercises · moma singapore · the inverted pyramid</p>
-      </div>
-    </a>
-    <a class="index-card poly-frame tilt reveal d2" href="art.html">
-      <img width="960" height="720" src="assets/thumbs/art.jpg" alt="Watercolor sketch of the ArtScience Museum" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.03</span>
-        <h3 class="vt-art">ART &amp; FIELD NOTES</h3>
-        <p class="mono">@ljungart · studies · sketches · process film</p>
-      </div>
-    </a>
-    <a class="index-card poly-frame tilt reveal" href="dream-engine.html">
-      <img width="960" height="720" src="assets/thumbs/dream.jpg" alt="Ink sketches overlaid on printed AI generations" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.04 · WRITING</span>
-        <h3 class="vt-dream">THE DREAM ENGINE</h3>
-        <p class="mono">essay · on AI, taste, and why creation requires risk</p>
-      </div>
-    </a>
-    <a class="index-card poly-frame tilt reveal d1" href="museum.html">
-      <img width="960" height="720" src="assets/thumbs/museum.jpg" alt="Museum of Memories translucent axonometric" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.05</span>
-        <h3 class="vt-museum">MUSEUM OF MEMORIES</h3>
-        <p class="mono">core studio 02 · bering strait · splats → rooms</p>
-      </div>
-    </a>
-    <a class="index-card poly-frame tilt reveal d2" href="y2k.html">
-      <img width="960" height="720" src="assets/thumbs/y2k.jpg" alt="Project Y2K in engine: Kohaku on a rooftop in the Drowned Quarter" loading="lazy">
-      <div class="ic-label">
-        <span class="mono ic-num">R.06 · GAME</span>
-        <h3 class="vt-y2k">PROJECT Y2K</h3>
-        <p class="mono">anime action rpg · unreal 5.8 · ten operatives · a city grown by script</p>
-      </div>
-    </a>
-  </div>
+<!-- prize ticket -->
+<aside class="ticket" id="ticket" aria-live="polite" hidden>
+  <div class="tk-top"><span>PRIZE TICKET</span><span id="tk-no">№ —</span><button type="button" class="tk-x" id="tk-x" aria-label="Close ticket">✕</button></div>
+  <div class="tk-body" id="tk-body"></div>
+  <div class="tk-foot"><span id="tk-count">0 / 12 collected</span><span class="tk-dots" id="tk-dots"></span></div>
+</aside>
+
+<!-- the chapters: scroll drives the camera; this text is also the whole page without WebGL -->
+<main id="chapters">
+
+  <section class="ch" id="s-intro" data-station="00" data-name="ENTRANCE" style="--h:170vh">
+    <div class="plac plac-intro">
+      <p class="pk">C.L.J — PORTFOLIO / WORLD V.2026.11</p>
+      <h1>Liang Jung<i>.</i></h1>
+      <p class="lede">Architecture student at <b>SUTD</b>, building tools where <b>AI</b>, <b>computation</b> and <b>architecture</b> have to answer to each other.</p>
+      <dl class="meta">
+        <div><dt>School</dt><dd>SUTD · B.Arch ’28</dd></div>
+        <div><dt>Practice</dt><dd>Rhino / GH · MCP tooling · splats · Unreal · geospatial</dd></div>
+        <div><dt>Now</dt><dd>Almond 0.8 stable · Ginkgo agent films · Kern beta · Y2K v072</dd></div>
+      </dl>
+      <p class="scroll-cue"><span></span>SCROLL TO WALK THE MODEL</p>
+    </div>
+  </section>
+
+  <section class="ch" id="s-latest" data-station="01" data-name="LATEST" style="--h:60vh">
+    <div class="plac plac-chap"><p class="pk">01 / LATEST</p><h2>Four works, in motion</h2><p>The newest film from each project, playing on the stands as you pass. Click a screen to open its room.</p></div>
+  </section>
+  <section class="ch work" id="w-almond" data-station="01" data-name="LATEST — ALMOND" style="--h:120vh">
+    <div class="plac"><p class="pk">W.01 · TOOL · 0.8.0 · 2026.11.21</p><h3>Almond 0.8</h3>
+      <p>The stable release. A native structural solver that judges every member on its own span, gridshells cross-checked against OpenSees, a daylight-and-comfort engine (beta), and a model library grown from 84 to 144.</p>
+      <dl class="meta"><div><dt>Stable</dt><dd>structure · EN 1993-1-1 · library</dd></div><div><dt>Beta</dt><dd>climate · daylight · thermal · comfort</dd></div></dl>
+      <a class="go" href="tools.html#p-almond">Open the documentation →</a></div>
+  </section>
+  <section class="ch work" id="w-ginkgo" data-station="01" data-name="LATEST — GINKGO" style="--h:120vh">
+    <div class="plac"><p class="pk">W.02 · TOOL / FILM · 2026.11.16</p><h3>Ginkgo</h3>
+      <p>A phone photo of Münsterplatz, Freiburg — the Fischbrunnen before a ribbed 1970s department store — rebuilt as a Blender scene by a team of agents, each measuring from a solved camera instead of guessing.</p>
+      <dl class="meta"><div><dt>Run</dt><dd>fischbrunnen · agents orbit v4</dd></div><div><dt>Medium</dt><dd>Blender 5.1 · Unreal 5.8 · Claude Code</dd></div></dl>
+      <a class="go" href="tools.html#p-ginkgo">Open the documentation →</a></div>
+  </section>
+  <section class="ch work" id="w-kern" data-station="01" data-name="LATEST — KERN" style="--h:120vh">
+    <div class="plac"><p class="pk">W.03 · SOFTWARE · 2026.11.10</p><h3>Kern</h3>
+      <p>A calm 3D modeller: NURBS and solids, a command prompt that asks for one thing at a time, a neo-Swiss look with a little play in it. Play mode grows streets and courtyards; the same model then meets a structural check and an evacuation run.</p>
+      <dl class="meta"><div><dt>Version</dt><dd>0.2.0 beta 2</dd></div><div><dt>Medium</dt><dd>Electron · React · three.js · OpenCASCADE</dd></div></dl>
+      <a class="go" href="tools.html#p-kern">Open the documentation →</a></div>
+  </section>
+  <section class="ch work" id="w-y2k" data-station="01" data-name="LATEST — PROJECT Y2K" style="--h:120vh">
+    <div class="plac"><p class="pk">W.04 · GAME · 2026.11.11</p><h3>Project Y2K</h3>
+      <p>Content v072, “organic”: Rei re-rigged to read as a body, not a puppet — the chest leans into starts and stops, the frozen fidget slide is gone — through the neon night market.</p>
+      <dl class="meta"><div><dt>Build</dt><dd>plugin 0.58.0 · content v072</dd></div><div><dt>Medium</dt><dd>Unreal Engine 5.8</dd></div></dl>
+      <a class="go" href="y2k.html">Enter the game room →</a></div>
+  </section>
+
+  <section class="ch" id="s-field" data-station="02" data-name="FIELD" style="--h:320vh">
+    <div class="plac plac-chap"><p class="pk">02 / FIELD</p><h2>Field documentation</h2><p>Seven photographs from crits, workshops and shows, printed large and stood along the walk. Each gate you pass reprints them on another Kodak stock — Portra 400, Gold 200, Ektar 100.</p>
+      <ul class="figs"><li>Campus, SUTD</li><li>Studio · the QR that opens the work</li><li>Museum of Memories · final review</li><li>Pin-up review, EPFL</li><li>Fabrication lab · Zünd cutter</li><li>SUTD showcase · live demo</li><li>Build week · bamboo and sail</li></ul></div>
+  </section>
+
+  <section class="ch" id="s-arcade" data-station="03" data-name="ARCADE" style="--h:210vh">
+    <div class="plac plac-chap"><p class="pk">03 / ARCADE</p><h2>Pick a machine, win a room</h2>
+      <p>Click a machine in the pavilion — or choose here. Each one pays out a project on a prize ticket.</p>
+      <div class="pick" id="pick">
+        <button type="button" data-bay="0"><span>M.01</span>Capsule</button>
+        <button type="button" data-bay="1"><span>M.02</span>Claw</button>
+        <button type="button" data-bay="2"><span>M.03</span>Bricks</button>
+        <button type="button" data-bay="3"><span>M.04</span>Air hockey</button>
+      </div></div>
+  </section>
+
+  <section class="ch" id="s-index" data-station="04" data-name="INDEX" style="--h:170vh">
+    <div class="plac plac-chap"><p class="pk">04 / INDEX</p><h2>Everything, in drawers</h2>
+      <ol class="idx" id="idx"></ol></div>
+  </section>
+
+  <section class="ch" id="s-contact" data-station="05" data-name="CONTACT" style="--h:190vh">
+    <div class="plac plac-contact"><p class="pk">05 / CONTACT</p><h2>Let’s build<br>something <i>odd</i>.</h2>
+      <button type="button" class="xp-go" id="xp-go"><span>06 / FREE EXPLORE</span>Walk the model yourself →</button>
+      <dl class="meta">
+        <div><dt>Email</dt><dd><a href="mailto:liangjung.lj@gmail.com">liangjung.lj@gmail.com</a></dd></div>
+        <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">@ljungart</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/liangjung-218074295" target="_blank" rel="noopener">liangjung</a></dd></div>
+        <div><dt>Rooms</dt><dd><a href="tools.html">Tools</a> · <a href="studio1.html">Studio</a> · <a href="museum.html">Museum</a> · <a href="y2k.html">Y2K</a> · <a href="art.html">Art</a> · <a href="archive.html">Plain archive</a></dd></div>
+      </dl>
+      <p class="colo">© 2026 Chen Liang Jung · a three.js world · set in Space Grotesk + IBM Plex Mono · built with Claude</p></div>
+  </section>
 </main>
 
-<!-- ── PRACTICE ────────────────────────────────────── -->
-<section id="practice" class="practice">
-  <div class="section-head reveal">
-    <h2><span class="mono idx">02</span> PRACTICE</h2>
-    <p class="mono">roles · research · education</p>
-  </div>
-  <div class="practice-grid">
-    <div class="poly p-card reveal">
-      <span class="mono pc-when">2025 — NOW</span>
-      <h4>SUTD · Building 0</h4>
-      <p>Designing the interior working space of Building 0 and exploring how AI can empower architecture students &amp; practices — VR platforms, projection mapping, map-based planning tools.</p>
-    </div>
-    <div class="poly p-card reveal d1">
-      <span class="mono pc-when">2024 — NOW</span>
-      <h4>LKY Centre for Innovative Cities</h4>
-      <p>Student research assistant on urban heat — household surveys, systematic reviews and research illustration.</p>
-    </div>
-    <div class="poly p-card reveal d2">
-      <span class="mono pc-when">2024 — 2028</span>
-      <h4>SUTD · B.Arch</h4>
-      <p>Bachelor of Architecture. 3rd place, What The Hack 2024. Posting art &amp; architecture as <a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">@ljungart</a>.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ─────────────────────────────────────── -->
-<footer id="contact" class="contact">
-  <div class="contact-inner poly reveal">
-    <h2 class="contact-title">LET'S BUILD<br>SOMETHING <span class="accent">ODD</span>.</h2>
-    <div class="contact-links mono">
-      <a href="mailto:liangjung.lj@gmail.com">liangjung.lj@gmail.com ↗</a>
-      <a href="https://www.instagram.com/ljungart/" target="_blank" rel="noopener">instagram / @ljungart ↗</a>
-      <a href="https://www.linkedin.com/in/liangjung-218074295" target="_blank" rel="noopener">linkedin ↗</a>
-      <a href="https://betelnut-mvp.vercel.app/" target="_blank" rel="noopener">betelnut app ↗</a>
-    </div>
-  </div>
-  <p class="colophon mono">© 2026 CHEN LIANG JUNG · SET IN SPACE GROTESK + IBM PLEX MONO · BUILT WITH CLAUDE</p>
-</footer>
-
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-  <img alt="">
-  <button class="lb-close mono" aria-label="Close">CLOSE ✕</button>
-</div>
-
-<script defer src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
-<script defer src="script.js?v=4"></script>
+<script type="module" src="/world/main.js"></script>
 <script defer src="passport.js?v=3"></script>
 </body>
 </html>

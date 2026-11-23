@@ -1,2 +1,4 @@
 ﻿# stale single-file edition, not part of the deployed site
 LiangJung-Portfolio.html
+node_modules/
+dist/

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Lab</title>
+<style>
+  html,body{margin:0;height:100%;background:#f7f7f5;font:12px "IBM Plex Mono",ui-monospace,monospace;color:#111}
+  #c{position:fixed;inset:0;width:100%;height:100%;display:block}
+  #ui{position:fixed;left:12px;bottom:12px;right:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  #ui button{font:inherit;text-transform:uppercase;letter-spacing:.1em;background:#fff;border:1px solid #111;padding:8px 12px;cursor:pointer}
+  #ui button.primary{background:#111;color:#fff}
+  #hint{flex-basis:100%;text-transform:uppercase;letter-spacing:.08em;color:#555}
+  #log{position:fixed;top:12px;right:12px;max-width:340px;background:#fff;border:1px solid #111;padding:8px 10px;white-space:pre-wrap}
+  #mode{position:fixed;top:12px;left:12px;background:#fff;border:1px solid #111;padding:6px 10px}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="mode"></div>
+<pre id="log">prizes:</pre>
+<div id="ui"><span id="hint"></span></div>
+<script type="module" src="/world/lab.js"></script>
+</body>
+</html>
